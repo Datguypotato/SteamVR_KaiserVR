@@ -15,6 +15,8 @@ public class GridContainerWindow : ViewportContent
         Vertical
     }
 
+    public GameObject handPrefab;
+
     [Header("Tab button settings")]
     [Tooltip("The button prefab to be used for each sub-grid's tab button")]
     public GameObject subTabButton;
@@ -26,6 +28,9 @@ public class GridContainerWindow : ViewportContent
     public SubTabAlignment subTabAlignment = SubTabAlignment.Horizontal;
 
     private ButtonUIController[] tabButtons;
+
+    public delegate void OnWindow();
+    public event OnWindow open;
 
     public override void SetupContent(UIpanel controller, GameObject viewPort)
     {
@@ -54,6 +59,9 @@ public class GridContainerWindow : ViewportContent
     public override void OpenWindow()
     {
         SwitchToPage(currentPage);
+
+        //this is for VR_swapHandModel
+        open?.Invoke();
     }
 
     public override void CloseWindow()

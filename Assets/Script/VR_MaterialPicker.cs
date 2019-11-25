@@ -39,10 +39,7 @@ public class VR_MaterialPicker : MonoBehaviour
             snapzones[i].UnSnap += SetMaterials;
         }
 
-        // get all the materials in the Resources folder
-        
-
-        //switcher.OnChange += SetMaterials;
+        switcher.OnChange += SetMaterials;
     }
 
     private void SetMaterials()

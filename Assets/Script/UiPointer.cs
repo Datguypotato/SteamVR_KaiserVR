@@ -41,6 +41,7 @@ public class UiPointer : MonoBehaviour
 
     //get changed in VR_FixedJointGrab
     public bool isgrabbing;
+
     float latestFloat;
 
     //variables for linerenderer

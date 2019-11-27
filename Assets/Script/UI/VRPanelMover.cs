@@ -18,6 +18,10 @@ public class VRPanelMover : MonoBehaviour
     public SteamVR_Action_Boolean panelButton;
     public SteamVR_Input_Sources hand;
 
+    public delegate void PanelEvents();
+    public event PanelEvents ClosePanel;
+    public event PanelEvents OpenPanel;
+
     //[Header("Interaction settings")]
     //[Tooltip("Button to enable/disable the UIPanel with")]
     //public VRTK_ControllerEvents.ButtonAlias key;
@@ -80,6 +84,12 @@ public class VRPanelMover : MonoBehaviour
         isEnabled = value;
         GetComponent<Canvas>().enabled = isEnabled;
         GotoPosition();
+            
+        if (!isEnabled)
+            ClosePanel?.Invoke();
+        else
+            OpenPanel?.Invoke();
+
         //any other stuff required for disabling/enabling canvas goes here
     }
 
@@ -87,5 +97,11 @@ public class VRPanelMover : MonoBehaviour
     {
         bool newValue = !isEnabled;
         EnableCanvas(newValue);
+    }
+
+    public void InvokeOpenPanel()
+    {
+        Debug.Log("Invoking Succesfull");
+        OpenPanel?.Invoke();
     }
 }

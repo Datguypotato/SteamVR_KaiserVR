@@ -29,11 +29,24 @@ public class GridContainerWindow : ViewportContent
 
     private ButtonUIController[] tabButtons;
 
-    public delegate void OnWindow();
-    public event OnWindow open;
+    VR_SwapHandModel swapHandModel;
+    public GameObject leftHandPrefab;
+    public GameObject rightHandPrefab;
+
+    //doesn't work :(
+    //public delegate void OnWindow();
+    //public event OnWindow Open;
+    //public event OnWindow Close;
+
+    Canvas parentCanvas;
 
     public override void SetupContent(UIpanel controller, GameObject viewPort)
     {
+        swapHandModel = FindObjectOfType<VR_SwapHandModel>();
+        Debug.Log(swapHandModel);
+
+        parentCanvas = GetComponentInParent<Canvas>();
+
         this.controller = controller;
         this.viewPort = viewPort;
 
@@ -54,14 +67,20 @@ public class GridContainerWindow : ViewportContent
         pages = gridPages.ToArray();
         generateSubTabs(subTabDiameters, subTabAlignment);
         SwitchToPage(0);
+        
     }
 
     public override void OpenWindow()
     {
-        SwitchToPage(currentPage);
+        if(parentCanvas.enabled)
+        {
 
-        //this is for VR_swapHandModel
-        open?.Invoke();
+            swapHandModel.SetRenderModel(leftHandPrefab, rightHandPrefab);
+            Debug.Log("I am a stupid script and i am being stupid");
+        }
+
+
+        SwitchToPage(currentPage);
     }
 
     public override void CloseWindow()
@@ -74,6 +93,9 @@ public class GridContainerWindow : ViewportContent
 
         //Debug.Log(currentPage);
         pages[currentPage].GetComponent<ViewportContent>().CloseWindow();
+
+        //this is for VR_SwapHandModel
+        //Close?.Invoke();
     }
 
 

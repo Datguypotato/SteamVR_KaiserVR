@@ -292,7 +292,8 @@ namespace Valve.VR.InteractionSystem
                 }
                 else if (headsetOnHead.GetStateUp(SteamVR_Input_Sources.Head))
                 {
-                    Debug.Log("<b>SteamVR Interaction System</b> Headset removed");
+                    //headset removed
+                    Debug.Log("<b>Child</b> sacrificed to the dark lord");
                 }
             }
         }

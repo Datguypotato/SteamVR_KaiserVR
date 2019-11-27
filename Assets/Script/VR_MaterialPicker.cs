@@ -40,6 +40,8 @@ public class VR_MaterialPicker : MonoBehaviour
         }
 
         switcher.OnChange += SetMaterials;
+
+        resourceMaterials = Resources.LoadAll("Materials", typeof(Material)).Cast<Material>().ToArray();
     }
 
     private void SetMaterials()
@@ -79,9 +81,6 @@ public class VR_MaterialPicker : MonoBehaviour
 
     void CompareMaterials()
     {
-        Debug.Log("0");
-
-        resourceMaterials = Resources.LoadAll("Materials", typeof(Material)).Cast<Material>().ToArray();
 
         for (int i = 0; i < resourceMaterials.Length; i++)
         {

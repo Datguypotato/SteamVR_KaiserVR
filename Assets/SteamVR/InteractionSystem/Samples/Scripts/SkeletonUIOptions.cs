@@ -60,6 +60,21 @@ namespace Valve.VR.InteractionSystem.Sample
             }
         }
 
+        public void SetRenderModel(GameObject leftprefab, GameObject rightPrefab)
+        {
+            for (int handIndex = 0; handIndex < Player.instance.hands.Length; handIndex++)
+            {
+                Hand hand = Player.instance.hands[handIndex];
+                if (hand != null)
+                {
+                    if (hand.handType == SteamVR_Input_Sources.RightHand)
+                        hand.SetRenderModel(rightPrefab);
+                    if (hand.handType == SteamVR_Input_Sources.LeftHand)
+                        hand.SetRenderModel(leftprefab);
+                }
+            }
+        }
+
         public void HideController()
         {
             for (int handIndex = 0; handIndex < Player.instance.hands.Length; handIndex++)

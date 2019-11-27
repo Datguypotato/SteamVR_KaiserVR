@@ -29,10 +29,10 @@ using Valve.VR.InteractionSystem;
 public class UiPointer : MonoBehaviour
 {
     [Header("laser properties")]
-    public RaycastHit hit;
     public float range = 10;
     public float UiOffset;
-    
+    public RaycastHit hit { get; private set; }
+
     public GameObject highlightedObject; //{ get; private set; }
 
     PointerEventData data;
@@ -41,7 +41,6 @@ public class UiPointer : MonoBehaviour
 
     //get changed in VR_FixedJointGrab
     public bool isgrabbing;
-
     float latestFloat;
 
     //variables for linerenderer

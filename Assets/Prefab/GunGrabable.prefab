@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3434561023506980147}
   - component: {fileID: 1925376378}
   m_Layer: 0
-  m_Name: Gun1
+  m_Name: GunGrabable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -204,8 +204,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.062291324, y: 0.18137461, z: 0.28511888}
-  m_Center: {x: -0.01816063, y: -0.030334564, z: -0.061317295}
+  m_Size: {x: 0.055049434, y: 0.18137461, z: 0.28511888}
+  m_Center: {x: -0.021781575, y: -0.030334562, z: -0.061317295}
 --- !u!1001 &5422074161832805163
 PrefabInstance:
   m_ObjectHideFlags: 0

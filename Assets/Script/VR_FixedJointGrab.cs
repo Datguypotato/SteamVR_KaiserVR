@@ -16,7 +16,7 @@ public class VR_FixedJointGrab : MonoBehaviour
     [Header("grab properties")]
     public SteamVR_Action_Boolean grabButton;
     public SteamVR_Input_Sources handGrab;
-    public GameObject CurrentGrabbedObject; //{ get; private set; }
+    public GameObject CurrentGrabbedObject{ get; private set; }
 
     UiPointer pointer;
     Hand hand;

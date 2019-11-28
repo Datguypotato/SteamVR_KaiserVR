@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3853471238239320957}
   - component: {fileID: 8597835674504729146}
   - component: {fileID: 5127760151032514235}
-  m_Layer: 0
-  m_Name: WallTest
+  m_Layer: 2
+  m_Name: GhostWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7520483938297374296}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 0.1}
+  m_LocalScale: {x: 2, y: 2, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93efa7740c4cc6041878417ffee46dc5, type: 2}
+  - {fileID: 2100000, guid: 11de4df511a245a42878197d02bcb9b9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

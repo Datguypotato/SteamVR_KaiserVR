@@ -12,9 +12,9 @@ public class GridBuilder : MonoBehaviour
     public float xRange = 1;
     public float yRange = 1;
 
+
     private void Awake()
     {
-        
         for (int x = 0; x < xSize; x++)
         {
             for (int y = 0; y < ySize; y++)

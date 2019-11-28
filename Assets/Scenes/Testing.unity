@@ -1050,6 +1050,7 @@ MonoBehaviour:
     type: 3}
   ghostWallPrefab: {fileID: 7520483938297374296, guid: 223bec3e001b65c46b9766144ce5f3ca,
     type: 3}
+  selectedPrefab: {fileID: 0}
 --- !u!20 &1249375220 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1125615910675954556, guid: b2f59f79a133a8f4db02b3d93b4a8c12,
@@ -2078,7 +2079,7 @@ PrefabInstance:
     - target: {fileID: 3434561023506980151, guid: 9046140ddaa0e0046b927a5157725c15,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.61
+      value: -0.29
       objectReference: {fileID: 0}
     - target: {fileID: 3434561023506980151, guid: 9046140ddaa0e0046b927a5157725c15,
         type: 3}
@@ -2088,7 +2089,7 @@ PrefabInstance:
     - target: {fileID: 3434561023506980151, guid: 9046140ddaa0e0046b927a5157725c15,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.4
+      value: 0.468
       objectReference: {fileID: 0}
     - target: {fileID: 3434561023506980151, guid: 9046140ddaa0e0046b927a5157725c15,
         type: 3}

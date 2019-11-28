@@ -11,6 +11,10 @@ public class VR_GridPointer : MonoBehaviour
     public GameObject wallPrefab;
     public GameObject ghostWallPrefab;
 
+    //WIP
+    public GameObject selectedPrefab;
+    //_WIP
+
     Transform gridManager;
 
     GameObject tempObject;
@@ -28,9 +32,24 @@ public class VR_GridPointer : MonoBehaviour
     {
         if (IsObjectGrid())
         {
+            Transform spawnTransform = pointer.highlightedObject.GetComponent<GridDistanceChecker>().GetClosestTarget(pointer.hit.point);
             if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
             {
-                Instantiate(wallPrefab, pointer.highlightedObject.GetComponent<GridDistanceChecker>().GetClosestTarget(pointer.hit.point).position + new Vector3(0, 1, 0), Quaternion.Euler(desiredRotation));
+                //spawn new object
+                if(spawnTransform.childCount == 0)
+                {
+                    PlaceObject(wallPrefab, spawnTransform);
+                }
+                else //replace object mesh
+                {
+                    MeshFilter childMeshFilter = spawnTransform.GetChild(0).GetComponent<MeshFilter>();
+
+                    if(childMeshFilter.mesh != selectedPrefab.GetComponent<MeshFilter>().mesh)
+                    {
+                        PlaceObject(selectedPrefab, spawnTransform);
+                    }
+                }
+                
             }
             else
             {
@@ -44,12 +63,12 @@ public class VR_GridPointer : MonoBehaviour
 
         if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
-
             desiredRotation = needRotate ? Vector3.zero : new Vector3(0, 90, 0);
             needRotate = !needRotate;
         }
     }
 
+    //check multiple condition
     bool IsObjectGrid()
     {
         if (pointer.highlightedObject != null)
@@ -141,5 +160,12 @@ public class VR_GridPointer : MonoBehaviour
 
         }
 
+    }
+
+    void PlaceObject(GameObject placeable, Transform t)
+    {
+        GameObject spawnedObject = Instantiate(placeable, t.position + new Vector3(0, 1, 0), Quaternion.Euler(desiredRotation));
+        spawnedObject.transform.SetParent(t);
+        spawnedObject.layer = 0;
     }
 }

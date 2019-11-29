@@ -10,7 +10,7 @@ public class GridDistanceChecker : MonoBehaviour
     {
         for (int i = 0; i < childrenTransform.Length; i++)
         {
-            childrenTransform[i] = transform.GetChild(i);
+            //childrenTransform[i] = transform.GetChild(i);
         }
     }
 

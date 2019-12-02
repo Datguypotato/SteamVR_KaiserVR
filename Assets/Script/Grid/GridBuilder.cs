@@ -45,10 +45,11 @@ public class GridBuilder : MonoBehaviour
                     //Vector3 offsetStarterPoint = transform.position + new Vector3(xRange / 2, 0, (y * yRange));
                     Instantiate(midPoint, transform.position + xOffset, transform.rotation, this.transform);
                     Instantiate(midPoint, transform.position + yOffset, transform.rotation, this.transform);
+
+                    Instantiate(midPoint, transform.position + new Vector3((x * range) - (range / 2), 0, 0), transform.rotation);
+                    Instantiate(midPoint, transform.position + new Vector3(0, 0, (y * range) - (range / 2)), transform.rotation);
                 }
 
-                Instantiate(midPoint, transform.position + new Vector3(, transform.rotation, this.transform);
-                Instantiate(midPoint, transform.position + xOffset, transform.rotation, this.transform);
 
             }
         }

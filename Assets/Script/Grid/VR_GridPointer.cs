@@ -8,19 +8,22 @@ public class VR_GridPointer : MonoBehaviour
     UiPointer pointer;
     public SteamVR_Action_Boolean PlaceButton;
     public SteamVR_Action_Boolean RotateButton;
-    public GameObject wallPrefab;
-    public GameObject ghostWallPrefab;
+    //public GameObject wallPrefab;
+    //public GameObject ghostWallPrefab;
 
     //WIP
-    public GameObject selectedPrefab;
+    //public GameObject selectedPrefab;
     //_WIP
 
     Transform gridManager;
 
     GameObject tempObject;
-    bool needRotate;
+    Transform spawnTransform;
     Vector3 desiredRotation = Vector3.zero;
+    bool needRotate;
     readonly float axisLimit = 0.05f;
+
+    Vector3 offset = new Vector3(0, 1, 0);
 
     private void Awake()
     {
@@ -32,28 +35,25 @@ public class VR_GridPointer : MonoBehaviour
     {
         if (IsObjectGrid())
         {
-            Transform spawnTransform = pointer.highlightedObject.GetComponent<GridDistanceChecker>().GetClosestTarget(pointer.hit.point);
-            if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
-            {
-                //spawn new object
-                if(spawnTransform.childCount == 0)
-                {
-                    PlaceObject(wallPrefab, spawnTransform);
-                }
-                else //replace object mesh
-                {
-                    MeshFilter childMeshFilter = spawnTransform.GetChild(0).GetComponent<MeshFilter>();
+            GridElement element = null;
 
-                    if(childMeshFilter.mesh != selectedPrefab.GetComponent<MeshFilter>().mesh)
-                    {
-                        PlaceObject(selectedPrefab, spawnTransform);
-                    }
-                }
-                
-            }
-            else
+            if(pointer.highlightedObject.GetComponent<GridElement>() != null)
             {
-                SetGhost(pointer.highlightedObject.GetComponent<GridDistanceChecker>());
+                element = pointer.highlightedObject.GetComponent<GridElement>();
+                spawnTransform = element.transform;
+            }
+
+            if(element != null)
+            {
+                if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
+                {
+                    PlaceObject(element.prefab, spawnTransform);
+
+                }
+                else
+                {
+                    SetGhost(element);
+                }
             }
         }
         else if(tempObject != null)
@@ -147,25 +147,31 @@ public class VR_GridPointer : MonoBehaviour
 
     }
 
-    void SetGhost(GridDistanceChecker distanceChecker)
+    void SetGhost(GridElement element)
     {
-        if(tempObject == null)
+        if(element != null)
         {
-            tempObject = Instantiate(ghostWallPrefab);
-        }
-        else
-        {
-            tempObject.transform.position = distanceChecker.GetClosestTarget(pointer.hit.point).position + new Vector3(0, 1, 0);
-            tempObject.transform.eulerAngles = desiredRotation;
-
+            if (tempObject == null)
+            {
+                tempObject = Instantiate(element.ghostPrefab);
+            }
+            else
+            {
+                tempObject.transform.position = element.transform.position + offset;
+                tempObject.transform.eulerAngles = desiredRotation;
+            }
         }
 
     }
 
     void PlaceObject(GameObject placeable, Transform t)
     {
-        GameObject spawnedObject = Instantiate(placeable, t.position + new Vector3(0, 1, 0), Quaternion.Euler(desiredRotation));
-        spawnedObject.transform.SetParent(t);
-        spawnedObject.layer = 0;
+        if(placeable != null)
+        {
+            GameObject spawnedObject = Instantiate(placeable, t.position + offset, Quaternion.Euler(desiredRotation));
+            spawnedObject.transform.SetParent(t);
+            spawnedObject.layer = 0;
+        }
     }
+
 }

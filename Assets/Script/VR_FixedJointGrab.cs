@@ -40,7 +40,7 @@ public class VR_FixedJointGrab : MonoBehaviour
     {
         if (!deleteMode)
         {
-            if (grabButton.GetStateDown(handGrab) && pointer.highlightedObject.transform.root.gameObject != null)
+            if (grabButton.GetStateDown(handGrab) && pointer.highlightedObject != null)
                 GrabFromAttachPoint(pointer.highlightedObject.transform.root.gameObject);
             else if (grabButton.GetStateUp(handGrab))
                 UngrabFromAttachPoint();

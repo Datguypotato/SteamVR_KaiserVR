@@ -371,7 +371,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &535317810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,12 +453,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67fa0d8cd6dd4a84981cf80707fd0110, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teleportButton:
+    actionPath: /actions/default/in/Teleport
+    needsReinit: 0
   prefab: {fileID: 3217330404199448298, guid: 02b3e81fc7de95340aafcab865a94c7e, type: 3}
   midPoint: {fileID: 2889346988707324680, guid: 6368af053a9ca4a4c8db6b273c0166c3,
     type: 3}
   xSize: 5
   ySize: 5
   range: 1
+  disableOnTeleport: 0
 --- !u!4 &756382440
 Transform:
   m_ObjectHideFlags: 0
@@ -816,8 +820,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0079b31a78b05ad41a5e862268de5cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultLeftHand: {fileID: 0}
-  defaultRightHand: {fileID: 0}
+  defaultLeftHand: {fileID: 1000011547835092, guid: d5082f7d9f947374197e0a97786f4e40,
+    type: 3}
+  defaultRightHand: {fileID: 1000012617731570, guid: 837f93beb9a614743ae3a2c0ada7c388,
+    type: 3}
   panelMover: {fileID: 81679668}
   SkeletonUIOptions: {fileID: 81679672}
 --- !u!4 &1003680865 stripped
@@ -1022,7 +1028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deleteButton:
-    actionPath: 
+    actionPath: /actions/default/in/DeleteButton
     needsReinit: 0
   hand: 2
   particlePrefab: {fileID: 0}
@@ -1044,11 +1050,6 @@ MonoBehaviour:
   RotateButton:
     actionPath: /actions/default/in/Rotate
     needsReinit: 0
-  wallPrefab: {fileID: 7520483938297374296, guid: 34af7fa7b8a316b4f907e01a935615bb,
-    type: 3}
-  ghostWallPrefab: {fileID: 7520483938297374296, guid: 223bec3e001b65c46b9766144ce5f3ca,
-    type: 3}
-  selectedPrefab: {fileID: 0}
 --- !u!20 &1249375220 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 1125615910675954556, guid: b2f59f79a133a8f4db02b3d93b4a8c12,
@@ -2060,6 +2061,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1125615910675954558, guid: b2f59f79a133a8f4db02b3d93b4a8c12,
+        type: 3}
+      propertyPath: particle
+      value: 
+      objectReference: {fileID: 8802649460367670128, guid: cf7c9a30ee2b2174bb31668d361e7c13,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2f59f79a133a8f4db02b3d93b4a8c12, type: 3}
 --- !u!1001 &3434561023268090958

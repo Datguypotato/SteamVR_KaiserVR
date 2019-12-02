@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VRGridObjectSpawner : VRObjectSpawner
+public class VRGridObjectSpawner : VRBaseObjectsSpawner
 {
 
     VR_GridPointer gridpointer;
@@ -14,9 +14,16 @@ public class VRGridObjectSpawner : VRObjectSpawner
         gridpointer = FindObjectOfType<VR_GridPointer>();
     }
 
-    public override void ButtonAction(int index, Vector3 pos)
+    public override void ButtonAction(int index)
     {
-        gridpointer.selectedPrefab = objects[index].spawnObject;
+        gridpointer.selectedPrefab = spawnableObjects[index].spawnObject;
+    }
+
+    public override void SetUpButton(GameObject buttonGameObject, int index)
+    {
+        base.SetUpButton(buttonGameObject, index);
+
+        button.onClick.AddListener(delegate { ButtonAction(index); });
     }
 
 }

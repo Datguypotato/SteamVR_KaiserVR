@@ -14,24 +14,37 @@ public class VR_DeleteOnGrabbed : MonoBehaviour
     public SteamVR_Input_Sources hand = SteamVR_Input_Sources.RightHand;
 
     public GameObject particlePrefab;
+    public GameObject currentGo;
 
     VR_FixedJointGrab fixedJointGrab;
+    public UiPointer pointer;
 
     private void Awake()
     {
         fixedJointGrab = GetComponent<VR_FixedJointGrab>();
+        pointer = GetComponent<UiPointer>();
     }
 
     private void Update()
     {
-        if (deleteButton.GetStateDown(hand) && fixedJointGrab.CurrentGrabbedObject != null)
+        if (deleteButton.GetStateDown(hand))
         {
-            Transform currentGo = fixedJointGrab.CurrentGrabbedObject.transform;
+            //GameObject currentGo = new GameObject();
 
-            if (particlePrefab)
-                Instantiate(particlePrefab, currentGo.position, currentGo.rotation);
+            //if (fixedJointGrab.CurrentGrabbedObject != null)
+            //{
+            //    currentGo = fixedJointGrab.CurrentGrabbedObject;
+            //}
+            if (pointer.highlightedObject.transform.parent != null && pointer.highlightedObject.GetComponentInParent<GridElement>() != null)
+            {
+                currentGo = pointer.highlightedObject;
+            }
 
-            Destroy(fixedJointGrab.CurrentGrabbedObject);
+            if (particlePrefab && currentGo != null)
+            {
+                Instantiate(particlePrefab, currentGo.transform.position, currentGo.transform.rotation);
+                Destroy(currentGo);
+            }
         }
     }
 }

@@ -6,4 +6,5 @@ public class GridElement : MonoBehaviour
 {
     public GameObject prefab;
     public GameObject ghostPrefab;
+
 }

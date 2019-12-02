@@ -36,14 +36,17 @@ public class GridBuilder : MonoBehaviour
                 Vector3 xOffset = new Vector3((x * range) - (range / 2), 0, (y * range));
                 Vector3 yOffset = new Vector3((x * range), 0, (y * range) - (range / 2));
 
+                Vector3 firstLayerX = new Vector3((x * range) - (range / 2), 0, 0);
+                Vector3 firstLayerY = new Vector3(0, 0, (y * range) - (range / 2));
+
                 if (x > 0 && y > 0)
                 {
                     //Vector3 offsetStarterPoint = transform.position + new Vector3(xRange / 2, 0, (y * yRange));
-                    Instantiate(midPoint, transform.position + xOffset, transform.rotation, this.transform).name = "Midpoint: " + Yoffset.ToString();
-                    Instantiate(midPoint, transform.position + yOffset, transform.rotation, this.transform).name = "Midpoint: " + xOffset.ToString();
+                    Instantiate(midPoint, transform.position + xOffset, transform.rotation, this.transform).name = "Midpoint: X " + x + " Y: " + y;
+                    Instantiate(midPoint, transform.position + yOffset, Quaternion.Euler(0,90,0), this.transform).name = "Midpoint: X " + x + " Y: " + y;
 
-                    Instantiate(midPoint, transform.position + new Vector3((x * range) - (range / 2), 0, 0), transform.rotation, this.transform).name = "Midpoint: " + new Vector3((x * range) - (range / 2), 0, 0).ToString();
-                    Instantiate(midPoint, transform.position + new Vector3(0, 0, (y * range) - (range / 2)), transform.rotation, this.transform).name = "Midpoint: " + new Vector3((x * range) - (range / 2), 0, 0).ToString();
+                    Instantiate(midPoint, transform.position + firstLayerX, transform.rotation, this.transform).name = "Midpoint: X " + x + " Y: " + y;
+                    Instantiate(midPoint, transform.position + firstLayerY, Quaternion.Euler(0,90,0), this.transform).name = "Midpoint: X " + x + " Y: " + y;
                 }
             }
         }

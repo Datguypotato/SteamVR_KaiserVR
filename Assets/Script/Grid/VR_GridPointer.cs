@@ -8,11 +8,11 @@ public class VR_GridPointer : MonoBehaviour
     UiPointer pointer;
     public SteamVR_Action_Boolean PlaceButton;
     public SteamVR_Action_Boolean RotateButton;
-    //public GameObject wallPrefab;
+    public GameObject wallPrefab;
     //public GameObject ghostWallPrefab;
 
     //WIP
-    //public GameObject selectedPrefab;
+    public GameObject selectedPrefab;
     //_WIP
 
     Transform gridManager;
@@ -20,6 +20,8 @@ public class VR_GridPointer : MonoBehaviour
     GameObject tempObject;
     Transform spawnTransform;
     Vector3 desiredRotation = Vector3.zero;
+    Vector3 spawnRotation;
+
     bool needRotate;
     readonly float axisLimit = 0.05f;
 
@@ -37,6 +39,7 @@ public class VR_GridPointer : MonoBehaviour
         {
             GridElement element = null;
 
+            //get element
             if(pointer.highlightedObject.GetComponent<GridElement>() != null)
             {
                 element = pointer.highlightedObject.GetComponent<GridElement>();
@@ -61,11 +64,11 @@ public class VR_GridPointer : MonoBehaviour
             Destroy(tempObject);
         }
 
-        if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
-        {
-            desiredRotation = needRotate ? Vector3.zero : new Vector3(0, 90, 0);
-            needRotate = !needRotate;
-        }
+        //if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
+        //{
+        //    desiredRotation = needRotate ? Vector3.zero : new Vector3(0, 90, 0);
+        //    needRotate = !needRotate;
+        //}
     }
 
     //check multiple condition
@@ -155,10 +158,17 @@ public class VR_GridPointer : MonoBehaviour
             {
                 tempObject = Instantiate(element.ghostPrefab);
             }
+            else if (element.prefab == wallPrefab)
+            {
+                tempObject.transform.position = element.transform.position + offset;
+                spawnRotation = element.transform.rotation.eulerAngles + desiredRotation;
+                tempObject.transform.eulerAngles = element.transform.rotation.eulerAngles + desiredRotation;
+            }
             else
             {
                 tempObject.transform.position = element.transform.position + offset;
-                tempObject.transform.eulerAngles = desiredRotation;
+                spawnRotation = desiredRotation;
+                //tempObject.transform.eulerAngles = element.transform.rotation.eulerAngles;
             }
         }
 
@@ -168,7 +178,7 @@ public class VR_GridPointer : MonoBehaviour
     {
         if(placeable != null)
         {
-            GameObject spawnedObject = Instantiate(placeable, t.position + offset, Quaternion.Euler(desiredRotation));
+            GameObject spawnedObject = Instantiate(placeable, t.position + offset, Quaternion.Euler(spawnRotation));
             spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
         }

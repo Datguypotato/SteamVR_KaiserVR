@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class VRGridObjectSpawner : VRBaseObjectsSpawner
 {
-
     VR_GridPointer gridpointer;
+    GridContainerWindow containerWindow;
+
+    private void OnEnable()
+    {
+        FindObjectOfType<GridBuilder>().objectSpawner = this;
+    }
 
     public override void Setup(ViewportContent controller)
     {
         base.Setup(controller);
 
         gridpointer = FindObjectOfType<VR_GridPointer>();
+        containerWindow = GetComponentInParent<GridContainerWindow>();
     }
 
     public override void ButtonAction(int index)
     {
-        gridpointer.selectedPrefab = spawnableObjects[index].spawnObject;
+        gridpointer.UpdateGrid(spawnableObjects[index].spawnObject);
+        Debug.Log(spawnableObjects[index].spawnObject.name);
     }
 
     public override void SetUpButton(GameObject buttonGameObject, int index)

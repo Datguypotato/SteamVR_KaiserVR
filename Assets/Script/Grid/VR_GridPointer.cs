@@ -6,23 +6,23 @@ using UnityEngine;
 public class VR_GridPointer : MonoBehaviour
 {
     UiPointer pointer;
+        
     public SteamVR_Action_Boolean PlaceButton;
     public SteamVR_Action_Boolean RotateButton;
-    public GameObject wallPrefab;
-    //public GameObject ghostWallPrefab;
 
-    //WIP
-    public GameObject selectedPrefab;
-    //_WIP
+    public Shader ghostShader;
+    public GameObject wallPrefab;
+
+    [SerializeField]
+    GameObject selectedPrefab;
 
     Transform gridManager;
-
     GameObject tempObject;
     Transform spawnTransform;
     Vector3 desiredRotation = Vector3.zero;
     Vector3 spawnRotation;
 
-    bool needRotate;
+    private bool needRotate;
     readonly float axisLimit = 0.05f;
 
     Vector3 offset = new Vector3(0, 1, 0);
@@ -50,7 +50,7 @@ public class VR_GridPointer : MonoBehaviour
             {
                 if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
                 {
-                    PlaceObject(element.prefab, spawnTransform);
+                    PlaceObject(selectedPrefab, spawnTransform);
 
                 }
                 else
@@ -71,7 +71,7 @@ public class VR_GridPointer : MonoBehaviour
         //}
     }
 
-    //check multiple condition
+    //check multiple conditions
     bool IsObjectGrid()
     {
         if (pointer.highlightedObject != null)
@@ -179,9 +179,14 @@ public class VR_GridPointer : MonoBehaviour
         if(placeable != null)
         {
             GameObject spawnedObject = Instantiate(placeable, t.position + offset, Quaternion.Euler(spawnRotation));
-            spawnedObject.transform.SetParent(t);
+            t.GetComponent<GridElement>().activeObject = spawnedObject;
+            //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
         }
     }
 
+    public void UpdateGrid(GameObject selectedGo)
+    {
+        selectedPrefab = selectedGo;
+    }
 }

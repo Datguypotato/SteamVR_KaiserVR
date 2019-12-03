@@ -15,8 +15,6 @@ public class GridContainerWindow : ViewportContent
         Vertical
     }
 
-    public GameObject handPrefab;
-
     [Header("Tab button settings")]
     [Tooltip("The button prefab to be used for each sub-grid's tab button")]
     public GameObject subTabButton;
@@ -30,20 +28,19 @@ public class GridContainerWindow : ViewportContent
     private ButtonUIController[] tabButtons;
 
     VR_SwapHandModel swapHandModel;
+    [Header("Hand model swap")]
     public GameObject leftHandPrefab;
     public GameObject rightHandPrefab;
 
     //doesn't work :(
-    //public delegate void OnWindow();
-    //public event OnWindow Open;
-    //public event OnWindow Close;
+    public delegate void OnWindow(int i);
+    public event OnWindow Open;
 
     Canvas parentCanvas;
 
     public override void SetupContent(UIpanel controller, GameObject viewPort)
     {
         swapHandModel = FindObjectOfType<VR_SwapHandModel>();
-        Debug.Log(swapHandModel);
 
         parentCanvas = GetComponentInParent<Canvas>();
 
@@ -74,9 +71,9 @@ public class GridContainerWindow : ViewportContent
     {
         if(parentCanvas.enabled)
         {
-
             swapHandModel.SetRenderModel(leftHandPrefab, rightHandPrefab);
-            Debug.Log("I am a stupid script and i am being stupid");
+
+            //Debug.Log("I am a stupid script and i am being stupid");
         }
 
 
@@ -102,11 +99,13 @@ public class GridContainerWindow : ViewportContent
     public override void ScrollNext()
     {
         pages[currentPage].GetComponent<ViewportContent>().ScrollNext();
+        Debug.Log("Scrol next");
     }
 
     public override void ScrollBack()
     {
         pages[currentPage].GetComponent<ViewportContent>().ScrollBack();
+        Debug.Log("Scrol back");
     }
 
     /// <summary>
@@ -161,6 +160,8 @@ public class GridContainerWindow : ViewportContent
             Array.ForEach(tabButtons, obj => obj.SetHighLight(false));
             tabButtons[pageNumber].SetHighLight(true);
         }
+
+        Open?.Invoke(pageNumber);
     }
 
     /// <summary>

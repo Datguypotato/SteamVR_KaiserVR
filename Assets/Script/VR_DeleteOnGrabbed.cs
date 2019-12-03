@@ -35,7 +35,7 @@ public class VR_DeleteOnGrabbed : MonoBehaviour
             //{
             //    currentGo = fixedJointGrab.CurrentGrabbedObject;
             //}
-            if (pointer.highlightedObject.transform.parent != null && pointer.highlightedObject.GetComponentInParent<GridElement>() != null)
+            if (pointer.highlightedObject != null && pointer.highlightedObject.CompareTag("GridObject"))
             {
                 currentGo = pointer.highlightedObject;
             }

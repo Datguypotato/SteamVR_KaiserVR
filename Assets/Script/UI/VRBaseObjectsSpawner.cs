@@ -8,6 +8,7 @@ public class VRBaseObjectsSpawner : GridButtonBehaviour
 {
 
     public GameObject[] spawnableprefabs;
+
     public ObjectData[] spawnableObjects;
 
     public bool showName;
@@ -39,6 +40,7 @@ public class VRBaseObjectsSpawner : GridButtonBehaviour
         NumberOfObjects = spawnableObjects.Length;
     }
 
+    //creating buttons
     public override void SetUpButton(GameObject buttonGameObject, int index)
     {
         ObjectData currentObject = spawnableObjects[index];

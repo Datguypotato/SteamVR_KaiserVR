@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
+/// <summary>
+/// base class for VGRidObjectSpawner and VRObjectSpawner
+/// </summary>
+
 public class VRBaseObjectsSpawner : GridButtonBehaviour
-{
-
+{ 
     public GameObject[] spawnableprefabs;
-
     public ObjectData[] spawnableObjects;
 
     public bool showName;

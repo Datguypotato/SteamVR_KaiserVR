@@ -35,7 +35,7 @@ public class GridBuilder : MonoBehaviour
 
     private void Awake()
     {
-        //CreateGrid();
+        CreateGrid();
     }
 
     private void Update()

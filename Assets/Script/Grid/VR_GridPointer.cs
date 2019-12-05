@@ -25,7 +25,7 @@ public class VR_GridPointer : MonoBehaviour
     private bool needRotate;
     readonly float axisLimit = 0.05f;
 
-    Vector3 offset = new Vector3(0, 1, 0);
+    //Vector3 offset = new Vector3(0, 1, 0);
 
     private void Awake()
     {
@@ -55,7 +55,7 @@ public class VR_GridPointer : MonoBehaviour
                 }
                 else
                 {
-                    SetGhost(element);
+                    SetGhost(element ,selectedPrefab);
                 }
             }
         }
@@ -117,75 +117,71 @@ public class VR_GridPointer : MonoBehaviour
                 return gridTransform.position - new Vector3(0.5f, 0, 0);
             }
         }
-            //}
 
-            //Debug.Log(deltaZ + " - " + deltaX);
-            //Debug.Log(deltaZ - deltaX);
-            //if (deltaZ > axisLimit && deltaX > axisLimit)
-            //{
-            //    if(deltaZ - deltaX > 0)
-            //    {
-            //        return gridTransform.position - new Vector3(0, 0, 0.5f);
-            //    }
-            //    else
-            //    {
-            //        return gridTransform.position - new Vector3(0.5f, 0, 0);
-            //    }
-            //}
-            //else if(deltaX < -axisLimit && deltaZ < -axisLimit)
-            //{
-
-            //    if (deltaZ - deltaX < 0)
-            //    {
-            //        return gridTransform.position - new Vector3(-0.5f, 0, 0);
-            //    }
-            //    else
-            //    {
-            //        return gridTransform.position - new Vector3(0.5f, 0, 0);
-            //    }
-            //}
 
             return gridTransform.position;
 
 
     }
 
-    void SetGhost(GridElement element)
+    void SetGhost(GridElement gridObject, GameObject GhostObject)
     {
-        if(element != null)
+        if(gridObject != null)
         {
             if (tempObject == null)
             {
-                tempObject = Instantiate(element.ghostPrefab);
+                tempObject = Instantiate(GhostObject);
+                tempObject.layer = 2;
+                SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);
+
+                for (int i = 0; i < tempObject.transform.childCount; i++)
+                {
+                    SetGhostShaders(tempObject.transform.GetChild(i).GetComponent<MeshRenderer>().materials);
+                }
+
             }
-            else if (element.prefab == wallPrefab)
+            else if(gridObject.myType == GridTypes.Colum)
             {
-                tempObject.transform.position = element.transform.position + offset;
-                spawnRotation = element.transform.rotation.eulerAngles + desiredRotation;
-                tempObject.transform.eulerAngles = element.transform.rotation.eulerAngles + desiredRotation;
+                tempObject.transform.position = gridObject.transform.position;
+                tempObject.transform.rotation = Quaternion.identity;
+                //Debug.Log("Colum");
             }
             else
             {
-                tempObject.transform.position = element.transform.position + offset;
-                spawnRotation = desiredRotation;
-                //tempObject.transform.eulerAngles = element.transform.rotation.eulerAngles;
+                tempObject.transform.position = gridObject.transform.position;
+                spawnRotation = gridObject.transform.rotation.eulerAngles + desiredRotation;
+                tempObject.transform.eulerAngles = gridObject.transform.rotation.eulerAngles + desiredRotation;
+                //Debug.Log("Comumn't");
             }
         }
 
+    }
+
+    void SetGhostShaders(Material[] mats)
+    {
+        for (int i = 0; i < mats.Length; i++)
+        {
+            mats[i].shader = ghostShader;
+        }
     }
 
     void PlaceObject(GameObject placeable, Transform t)
     {
         if(placeable != null)
         {
-            GameObject spawnedObject = Instantiate(placeable, t.position + offset, Quaternion.Euler(spawnRotation));
+            GameObject spawnedObject = Instantiate(placeable, t.position, Quaternion.Euler(spawnRotation));
+            if (placeable.GetComponent<GridElement>().myType == GridTypes.Colum)
+            {
+                spawnedObject.transform.rotation = Quaternion.identity;
+            }
+
             t.GetComponent<GridElement>().activeObject = spawnedObject;
             //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
         }
     }
 
-    public void UpdateGrid(GameObject selectedGo)
+    public void UpdateSelection(GameObject selectedGo)
     {
         selectedPrefab = selectedGo;
     }

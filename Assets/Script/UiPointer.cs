@@ -33,129 +33,81 @@ public class UiPointer : MonoBehaviour
     public float UiOffset;
     public RaycastHit hit { get; private set; }
 
-    public GameObject highlightedObject; //{ get; private set; }
+    [SerializeField] private float defaultLength = 5.0f;
+    [SerializeField] private GameObject dot = null;
+
+    public Camera Camera { get; private set; } = null;
+
+    private LineRenderer lineRenderer = null;
+    private VR_Inputmodule inputModule = null;
+
+    float targetLength;
 
     PointerEventData data;
-
-    public Rigidbody highlightedRb;
+    
+    public GameObject highlightedObject;
 
     //get changed in VR_FixedJointGrab
     public bool isgrabbing;
     float latestFloat;
 
-    //variables for linerenderer
-    LineRenderer linerenderer;
-    GameObject dot;
-    Vector3 endLinePos;
-    VR_Inputmodule inputmodule;
-
-    //grabbing
-    Hand hand;
-    FixedJoint grabbedJoint;
-    Rigidbody grabbedRb;
-
     private void Awake()
     {
-        linerenderer = GetComponent<LineRenderer>();
-        dot = transform.GetChild(0).gameObject;
-        inputmodule = FindObjectOfType<VR_Inputmodule>();
-        hand = GetComponentInParent<Hand>();
-    }
-    
-    void Update()
-    {
-        //only update line when nothing is grabbed
-        hit = CreateRayCast(range);
-        data = inputmodule.GetData();
+        Camera = GetComponent<Camera>();
+        Camera.enabled = false;
 
-        endLinePos = transform.position + (transform.forward * GetLaserPos(data));
-
-        dot.transform.position = endLinePos;
-        linerenderer.SetPosition(0, transform.parent.transform.position);
-        linerenderer.SetPosition(1, endLinePos);
-
-        //if(highlightedObject != null)
-        //    SetKinemetic();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
-    /// <summary>
-    /// Used to create the raycast that is used for grabing and creating the posistion for the linerenderer
-    /// </summary>
-    /// <param name="lenght"> is the range of the raycast</param>
-    RaycastHit CreateRayCast(float lenght)
+
+    private void Start()
     {
-        RaycastHit _hit;
-        Ray ray = new Ray(transform.position, transform.forward);
-
-        Physics.Raycast(ray, out _hit, lenght);
-
-        //update higlightObject
-        highlightedObject = _hit.collider != null ? highlightedObject = _hit.collider.gameObject : highlightedObject = null; 
-
-        return _hit;
+        // current.currentInputModule does not work
+        inputModule = EventSystem.current.gameObject.GetComponent<VR_Inputmodule>();
     }
 
-    /// <summary>
-    /// Calculating the range of the linerenderer and dot
-    /// ignore calculating if the player is grabbing something
-    /// </summary>
-    /// <param name="_data">is for UI elements collission</param>
-    float GetLaserPos(PointerEventData _data)
+    private void Update()
     {
+        UpdateLine();
+    }
+
+    private void UpdateLine()
+    {
+        // Use default or distance
+        PointerEventData data = inputModule.Data;
+        hit = CreateRaycast();
+
+        // filling variables
+        highlightedObject = hit.collider != null ? highlightedObject = hit.collider.gameObject : highlightedObject = null;
+
         if (!isgrabbing)
         {
-            if (_data.pointerCurrentRaycast.distance == 0)
-            {
-                if (range < hit.distance)
-                {
-                    latestFloat = range;
-                }
-                else
-                {
-                    //latestFloat = hit.distance == 0 ? range : hit.distance;
-                    if(hit.distance == 0)
-                    {
-                        latestFloat = range;
-                        //Debug.Log("0");
-                    }
-                    else
-                    {
-                        latestFloat = hit.distance;
-                        //Debug.Log("1");
-                    }
-                }
-            }
-            else
-            {
-                latestFloat = _data.pointerCurrentRaycast.distance - UiOffset;
-            }
+            // If nothing is hit, set do default length
+            float colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
+            float canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+
+            // Get the closest one
+            targetLength = Mathf.Min(colliderDistance, canvasDistance);
         }
-        return latestFloat;
+
+        // Default
+        Vector3 endPosition = transform.position + (transform.forward * targetLength);
+
+        // Set position of the dot
+        dot.transform.position = endPosition;
+
+        // Set linerenderer
+        lineRenderer.SetPosition(0, transform.parent.transform.position);
+        lineRenderer.SetPosition(1, endPosition);
     }
 
+    private RaycastHit CreateRaycast()
+    {
+        RaycastHit hit;
+        Ray ray = new Ray(transform.position, transform.forward);
+        Physics.Raycast(ray, out hit, defaultLength);
 
+        return hit;
+    }
 
-    //void SetKinemetic()
-    //{
-    //    //highlightedRb = highlightedObject.GetComponent<Rigidbody>() != null ? highlightedRb = highlightedObject.GetComponent<Rigidbody>() : highlightedRb = null;
-
-    //    if(highlightedObject.GetComponent<Rigidbody>() != null)
-    //    {
-    //        if (MaterialTab.activeInHierarchy)
-    //        {
-    //            highlightedRb = highlightedObject.GetComponent<Rigidbody>();
-    //            highlightedRb.isKinematic = true;
-    //        }
-    //        else
-    //        {
-    //            highlightedRb.isKinematic = false;
-                
-    //        }
-    //    }
-    //    else
-    //    {
-    //        highlightedRb = null;
-    //    }
-    //}
-    
 }

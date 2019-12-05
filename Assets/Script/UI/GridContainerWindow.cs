@@ -35,6 +35,7 @@ public class GridContainerWindow : ViewportContent
     //doesn't work :(
     public delegate void OnWindow(int i);
     public event OnWindow Open;
+    public event OnWindow Close;
 
     Canvas parentCanvas;
 
@@ -92,7 +93,7 @@ public class GridContainerWindow : ViewportContent
         pages[currentPage].GetComponent<ViewportContent>().CloseWindow();
 
         //this is for VR_SwapHandModel
-        //Close?.Invoke();
+        Close?.Invoke(0);
     }
 
 

@@ -8,6 +8,7 @@ public class GridBuilder : MonoBehaviour
 {
     public SteamVR_Action_Boolean teleportButton;
     public GridContainerWindow containerWindow;
+    VRPanelMover panelMover;
 
     public GameObject pillarPoint;
     public GameObject midPoint;
@@ -20,22 +21,34 @@ public class GridBuilder : MonoBehaviour
     public bool disableOnTeleport;
     public Transform[] pointsholder;
 
+    bool[] isActive;
+    int lastTabIndex;
+
     [HideInInspector]
+    //this get assigned in the VRGridObjectSpawner
     public VRGridObjectSpawner objectSpawner;
 
     private void OnEnable()
     {
         containerWindow.Open += ShowGrid;
+        
+        panelMover.ClosePanel += HideGrid;
+        panelMover.OpenPanel += LastShowGrid;
+
     }
 
     private void OnDisable()
     {
         containerWindow.Open -= ShowGrid;
+
+        panelMover.ClosePanel -= HideGrid;
     }
 
     private void Awake()
     {
+        panelMover = FindObjectOfType<VRPanelMover>();
         CreateGrid();
+        isActive = new bool[transform.childCount];
     }
 
     private void Update()
@@ -44,8 +57,10 @@ public class GridBuilder : MonoBehaviour
         {
             if (teleportButton.GetStateDown(SteamVR_Input_Sources.Any))
             {
+                
                 for (int i = 0; i < transform.childCount; i++)
                 {
+                    isActive[i] = transform.GetChild(i).gameObject.activeSelf;
                     transform.GetChild(i).gameObject.SetActive(false);
                 }
             }
@@ -53,7 +68,7 @@ public class GridBuilder : MonoBehaviour
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    transform.GetChild(i).gameObject.SetActive(true);
+                    transform.GetChild(i).gameObject.SetActive(isActive[i]);
                 }
             }
         }
@@ -61,6 +76,7 @@ public class GridBuilder : MonoBehaviour
     
     void ShowGrid(int index)
     {
+        lastTabIndex = index;
         for (int i = 0; i < pointsholder.Length; i++)
         {
             pointsholder[i].gameObject.SetActive(false);
@@ -71,6 +87,29 @@ public class GridBuilder : MonoBehaviour
         if(objectSpawner != null)
         {
             objectSpawner.ButtonAction(0);
+        }
+    }
+
+    void LastShowGrid()
+    {
+        for (int i = 0; i < pointsholder.Length; i++)
+        {
+            pointsholder[i].gameObject.SetActive(false);
+        }
+        pointsholder[lastTabIndex].gameObject.SetActive(true);
+
+        //set default object
+        if (objectSpawner != null)
+        {
+            objectSpawner.ButtonAction(0);
+        }
+    }
+
+    private void HideGrid()
+    {
+        for (int i = 0; i < pointsholder.Length; i++)
+        {
+            pointsholder[i].gameObject.SetActive(false);
         }
     }
 
@@ -87,7 +126,6 @@ public class GridBuilder : MonoBehaviour
 
     void CreateGrid()
     {
-
         float Xoffset = range / 2;
         float Yoffset = range / 2;
 

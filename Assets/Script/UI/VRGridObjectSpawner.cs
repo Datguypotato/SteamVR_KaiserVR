@@ -22,7 +22,7 @@ public class VRGridObjectSpawner : VRBaseObjectsSpawner
 
     public override void ButtonAction(int index)
     {
-        gridpointer.UpdateGrid(spawnableObjects[index].spawnObject);
+        gridpointer.UpdateSelection(spawnableObjects[index].spawnObject);
         Debug.Log(spawnableObjects[index].spawnObject.name);
     }
 

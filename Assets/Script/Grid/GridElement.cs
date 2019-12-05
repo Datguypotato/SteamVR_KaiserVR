@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class GridElement : MonoBehaviour
 {
-    public GameObject prefab;
-    public GameObject ghostPrefab;
+    public GridTypes myType;
 
+    //get assigned in VR_GridPointer
     public GameObject activeObject;
 
-    public Collider[] colliders;
-    public MeshRenderer meshrender;
+    Collider[] colliders;
+    MeshRenderer meshrender;
 
     private void Awake()
     {
@@ -45,4 +45,10 @@ public class GridElement : MonoBehaviour
 
         }
     }
+}
+
+public enum GridTypes
+{
+    wall,
+    Colum
 }

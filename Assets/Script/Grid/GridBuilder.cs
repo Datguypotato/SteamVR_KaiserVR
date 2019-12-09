@@ -6,20 +6,27 @@ using UnityEngine;
 
 public class GridBuilder : MonoBehaviour
 {
-    public SteamVR_Action_Boolean teleportButton;
     public GridContainerWindow containerWindow;
     VRPanelMover panelMover;
 
-    public GameObject pillarPoint;
-    public GameObject midPoint;
+    [Header("Grid element prefabs")]
+    public GameObject columPoint;
+    public GameObject wallPoint;
+    public GameObject floorPoints;
 
+    [Header("Grid size")]
     public int xSize;
     public int ySize;
     
     public float range = 1;
 
+    [Space(10)]
+
+    [Tooltip("Enable this if you want to hide the grid on Teleport")]
     public bool disableOnTeleport;
-    public Transform[] pointsholder;
+    public SteamVR_Action_Boolean teleportButton;
+
+    Transform[] pointsholder;
 
     bool[] isActive;
     int lastTabIndex;
@@ -42,13 +49,22 @@ public class GridBuilder : MonoBehaviour
         containerWindow.Open -= ShowGrid;
 
         panelMover.ClosePanel -= HideGrid;
+        panelMover.OpenPanel -= LastShowGrid;
     }
 
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
-        CreateGrid();
         isActive = new bool[transform.childCount];
+
+        pointsholder = new Transform[transform.childCount];
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            pointsholder[i] = transform.GetChild(i);
+        }
+
+
+        CreateGrid();
     }
 
     private void Update()
@@ -126,34 +142,45 @@ public class GridBuilder : MonoBehaviour
 
     void CreateGrid()
     {
-        float Xoffset = range / 2;
-        float Yoffset = range / 2;
+        float offset = range / 2;
 
         for (int x = 0; x < xSize; x++)
         {
             for (int y = 0; y < ySize; y++)
             {
+                float xRanged = x * range;
+                float yRanged = y * range;
+
+                Vector3 xOffset = new Vector3(xRanged - offset, 0, yRanged);
+                Vector3 yOffset = new Vector3(xRanged, 0, yRanged - offset);
+
+                Vector3 firstLayerX = new Vector3(xRanged - offset, 0, 0);
+                Vector3 firstLayerY = new Vector3(0, 0, yRanged - offset);
+
+
                 //pillar point
-                GameObject crosses = Instantiate(pillarPoint, transform.position + new Vector3(x * range, 0, y * range), transform.rotation, pointsholder[0]);
+                GameObject crosses = Instantiate(columPoint, transform.position + new Vector3(xRanged, 0, yRanged), transform.rotation, pointsholder[0]);
 
                 crosses.name = "Grid X: " + x + " Y: " + y;
 
                 //mid point
-                Vector3 xOffset = new Vector3((x * range) - (range / 2), 0, (y * range));
-                Vector3 yOffset = new Vector3((x * range), 0, (y * range) - (range / 2));
-
-                Vector3 firstLayerX = new Vector3((x * range) - (range / 2), 0, 0);
-                Vector3 firstLayerY = new Vector3(0, 0, (y * range) - (range / 2));
-
                 if (x > 0 && y > 0)
                 {
-                    //Vector3 offsetStarterPoint = transform.position + new Vector3(xRange / 2, 0, (y * yRange));
-                    Instantiate(midPoint, transform.position + xOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-                    Instantiate(midPoint, transform.position + yOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                    
+                    Instantiate(wallPoint, transform.position + xOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                    Instantiate(wallPoint, transform.position + yOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
 
-                    Instantiate(midPoint, transform.position + firstLayerX, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-                    Instantiate(midPoint, transform.position + firstLayerY, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                    Instantiate(wallPoint, transform.position + firstLayerX, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                    Instantiate(wallPoint, transform.position + firstLayerY, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+
+                //Floor point
+
+                    Vector3 FloorPos = new Vector3(xRanged - offset, 0, yRanged - offset);
+                    Instantiate(floorPoints, transform.position + FloorPos, Quaternion.identity, pointsholder[2]);
                 }
+
+                //create more grid points if needed
+
             }
         }
     }

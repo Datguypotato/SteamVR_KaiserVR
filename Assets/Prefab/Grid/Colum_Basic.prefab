@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7718899210913708433}
   - component: {fileID: 4045218198478783848}
   - component: {fileID: -6253305255830157641}
-  - component: {fileID: 8880484056871515475}
+  - component: {fileID: -6360646891332481189}
   m_Layer: 0
   m_Name: Colum_Basic
   m_TagString: GridObject
@@ -92,7 +92,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.26, y: 3, z: 0.26}
   m_Center: {x: 0, y: 1.5, z: 0}
---- !u!114 &8880484056871515475
+--- !u!114 &-6360646891332481189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,8 +101,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2314663877399556532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17e1788c9ff37ab488442a2d3380cdac, type: 3}
+  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myType: 1
-  activeObject: {fileID: 0}

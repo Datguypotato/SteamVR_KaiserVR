@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Valve.VR;
+using Valve.VR.InteractionSystem;
 using UnityEngine;
 
 public class VR_GridPointer : MonoBehaviour
@@ -126,18 +127,25 @@ public class VR_GridPointer : MonoBehaviour
 
     void SetGhost(GridElement gridObject, GameObject GhostObject)
     {
-        if(gridObject != null)
+        if(gridObject != null && GhostObject != null)
         {
             if (tempObject == null)
             {
                 tempObject = Instantiate(GhostObject);
                 tempObject.layer = 2;
-                SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);
 
-                for (int i = 0; i < tempObject.transform.childCount; i++)
+                if(gridObject.myType == GridTypes.Floor)
                 {
-                    SetGhostShaders(tempObject.transform.GetChild(i).GetComponent<MeshRenderer>().materials);
+                    for (int i = 0; i < tempObject.transform.childCount; i++)
+                    {
+                        SetGhostShaders(tempObject.transform.GetChild(i).GetComponent<MeshRenderer>().materials);
+                    }
                 }
+                else
+                {
+                    SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);
+                }
+                
 
             }
             else if(gridObject.myType == GridTypes.Colum)
@@ -170,11 +178,16 @@ public class VR_GridPointer : MonoBehaviour
         if(placeable != null)
         {
             GameObject spawnedObject = Instantiate(placeable, t.position, Quaternion.Euler(spawnRotation));
+
+            //special offset or default pos
             if (placeable.GetComponent<GridElement>().myType == GridTypes.Colum)
             {
                 spawnedObject.transform.rotation = Quaternion.identity;
             }
-
+            else if(placeable.GetComponent<GridElement>().myType == GridTypes.Floor)
+            {
+                Instantiate(placeable, t.position + new Vector3(0, 0.2f, 0), Quaternion.identity).AddComponent<TeleportArea>();
+            }
             t.GetComponent<GridElement>().activeObject = spawnedObject;
             //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;

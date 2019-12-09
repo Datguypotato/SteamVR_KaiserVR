@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridElement : MonoBehaviour
+public class GridElement : GridObject
 {
-    public GridTypes myType;
-
     //get assigned in VR_GridPointer
     public GameObject activeObject;
 
@@ -34,7 +32,6 @@ public class GridElement : MonoBehaviour
         }
     }
 
-
     void DissableComponents(bool b)
     {
         meshrender.enabled = b;
@@ -47,8 +44,3 @@ public class GridElement : MonoBehaviour
     }
 }
 
-public enum GridTypes
-{
-    wall,
-    Colum
-}

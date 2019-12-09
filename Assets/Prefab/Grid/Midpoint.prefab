@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2889346988707324680}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.025, z: 0.05}
+  m_LocalScale: {x: 1, y: 0.2, z: 0.05}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -91,9 +91,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17e1788c9ff37ab488442a2d3380cdac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 7520483938297374296, guid: 34af7fa7b8a316b4f907e01a935615bb, type: 3}
-  ghostPrefab: {fileID: 7520483938297374296, guid: 223bec3e001b65c46b9766144ce5f3ca,
-    type: 3}
+  myType: 0
+  activeObject: {fileID: 0}
 --- !u!65 &945209698569970286
 BoxCollider:
   m_ObjectHideFlags: 0

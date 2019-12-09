@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Valve.VR;
-using UnityEditor;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GridBuilder : MonoBehaviour
@@ -15,10 +15,19 @@ public class GridBuilder : MonoBehaviour
     public GameObject floorPoints;
 
     [Header("Grid size")]
-    public int xSize;
-    public int ySize;
+    public int xStartSize;
+    public int yStartSize;
     
-    public float range = 1;
+    public float startRange = 1;
+
+    [Header("Slider")]
+    public Slider xSlider;
+    public Slider ySlider;
+    public Slider rangeSlider;
+
+    Text xSliderText;
+    Text ySliderText;
+    Text rangeSlidertext;
 
     [Space(10)]
 
@@ -63,8 +72,11 @@ public class GridBuilder : MonoBehaviour
             pointsholder[i] = transform.GetChild(i);
         }
 
-
-        CreateGrid();
+        xSliderText = xSlider.GetComponentInChildren<Text>();
+        ySliderText = ySlider.GetComponentInChildren<Text>();
+        rangeSlidertext = rangeSlider.GetComponentInChildren<Text>();
+        
+        CreateGrid(xStartSize, yStartSize, startRange);
     }
 
     private void Update()
@@ -89,7 +101,8 @@ public class GridBuilder : MonoBehaviour
             }
         }
     }
-    
+   
+
     void ShowGrid(int index)
     {
         lastTabIndex = index;
@@ -129,18 +142,7 @@ public class GridBuilder : MonoBehaviour
         }
     }
 
-    //void ResetGrid()
-    //{
-    //    for (int i = 0; i < pointsholder.Length; i++)
-    //    {
-    //        for (int x = 0; x < pointsholder[i].childCount; x++)
-    //        {
-    //            DestroyImmediate(pointsholder[i].GetChild(x));
-    //        }
-    //    }
-    //}
-
-    void CreateGrid()
+    void CreateGrid(int xSize, int ySize, float range)
     {
         float offset = range / 2;
 
@@ -184,6 +186,32 @@ public class GridBuilder : MonoBehaviour
             }
         }
     }
+
+    public void OnSliderValueChange()
+    {
+        xSliderText.text = xSlider.value.ToString();
+        ySliderText.text = ySlider.value.ToString();
+        rangeSlidertext.text = rangeSlider.value.ToString();
+        Invoke("UpdateGrid", 1);
+    }
+
+    void ResetGrid()
+    {
+        for (int i = 0; i < pointsholder.Length; i++)
+        {
+            for (int x = 0; x < pointsholder[i].childCount; x++)
+            {
+                Destroy(pointsholder[i].GetChild(x).gameObject);
+            }
+        }
+    }
     
+    void UpdateGrid()
+    {
+        ResetGrid();
+        CreateGrid((int)xSlider.value, (int)ySlider.value, rangeSlider.value);
+
+        transform.localScale = new Vector3(rangeSlider.value, rangeSlider.value, rangeSlider.value);
+    }
 
 }

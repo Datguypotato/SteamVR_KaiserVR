@@ -12,7 +12,8 @@ public class VR_GridPointer : MonoBehaviour
     public SteamVR_Action_Boolean RotateButton;
 
     public Shader ghostShader;
-    public GameObject wallPrefab;
+
+    public GameObject dustParticle;
 
     [SerializeField]
     GameObject selectedPrefab;
@@ -177,20 +178,25 @@ public class VR_GridPointer : MonoBehaviour
     {
         if(placeable != null)
         {
-            GameObject spawnedObject = Instantiate(placeable, t.position, Quaternion.Euler(spawnRotation));
+            GameObject spawnedObject = Instantiate(placeable, t.position, Quaternion.Euler(spawnRotation), gridManager);
+
+            //spawn the particle
+            Instantiate(dustParticle, t.position, Quaternion.identity);
+
+            //play sound
+            spawnedObject.GetComponent<AudioSource>().Play();
 
             //special offset or default pos
-            if (placeable.GetComponent<GridElement>().myType == GridTypes.Colum)
+            if (placeable.GetComponent<GridObject>().myType == GridTypes.Colum)
             {
                 spawnedObject.transform.rotation = Quaternion.identity;
             }
-            else if(placeable.GetComponent<GridElement>().myType == GridTypes.Floor)
-            {
-                Instantiate(placeable, t.position + new Vector3(0, 0.2f, 0), Quaternion.identity).AddComponent<TeleportArea>();
-            }
+
             t.GetComponent<GridElement>().activeObject = spawnedObject;
             //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
+
+
         }
     }
 

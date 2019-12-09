@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class VRSlider : MonoBehaviour
 {
-    public void OnClick()
+    public Text sliderText;
+    Slider slider;
+
+    private void Awake()
     {
-        Debug.Log("PointerOnClick");
+        slider = GetComponent<Slider>();
     }
 
-    public void OnDown()
+    public void OnSliderChange()
     {
-        Debug.Log("PointerOnDown");
+        sliderText.text = slider.value.ToString();
     }
 }

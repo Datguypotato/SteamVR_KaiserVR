@@ -23,7 +23,6 @@ public class VRGridObjectSpawner : VRBaseObjectsSpawner
     public override void ButtonAction(int index)
     {
         gridpointer.UpdateSelection(spawnableObjects[index].spawnObject);
-        Debug.Log(spawnableObjects[index].spawnObject.name);
     }
 
     public override void SetUpButton(GameObject buttonGameObject, int index)

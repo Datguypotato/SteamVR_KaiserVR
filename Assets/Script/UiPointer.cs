@@ -84,7 +84,7 @@ public class UiPointer : MonoBehaviour
         {
             // If nothing is hit, set do default length
             float colliderDistance = hit.distance == 0 ? defaultLength : hit.distance;
-            float canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance;
+            float canvasDistance = data.pointerCurrentRaycast.distance == 0 ? defaultLength : data.pointerCurrentRaycast.distance - UiOffset;
 
             // Get the closest one
             targetLength = Mathf.Min(colliderDistance, canvasDistance);

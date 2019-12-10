@@ -25,9 +25,6 @@ public class GridBuilder : MonoBehaviour
     public Slider ySlider;
     public Slider rangeSlider;
 
-    Text xSliderText;
-    Text ySliderText;
-    Text rangeSlidertext;
 
     [Space(10)]
 
@@ -37,7 +34,7 @@ public class GridBuilder : MonoBehaviour
 
     Transform[] pointsholder;
 
-    bool[] isActive;
+    public bool[] isActive;
     int lastTabIndex;
 
     [HideInInspector]
@@ -64,18 +61,12 @@ public class GridBuilder : MonoBehaviour
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
-        isActive = new bool[transform.childCount];
-
         pointsholder = new Transform[transform.childCount];
+
         for (int i = 0; i < transform.childCount; i++)
         {
             pointsholder[i] = transform.GetChild(i);
         }
-
-        xSliderText = xSlider.GetComponentInChildren<Text>();
-        ySliderText = ySlider.GetComponentInChildren<Text>();
-        rangeSlidertext = rangeSlider.GetComponentInChildren<Text>();
-        
         CreateGrid(xStartSize, yStartSize, startRange);
     }
 
@@ -85,18 +76,24 @@ public class GridBuilder : MonoBehaviour
         {
             if (teleportButton.GetStateDown(SteamVR_Input_Sources.Any))
             {
-                
+                isActive = new bool[transform.childCount];
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    isActive[i] = transform.GetChild(i).gameObject.activeSelf;
-                    transform.GetChild(i).gameObject.SetActive(false);
+                    if (transform.GetChild(i) != null)
+                    {
+                        isActive[i] = transform.GetChild(i).gameObject.activeSelf;
+                        transform.GetChild(i).gameObject.SetActive(false);
+                    }
                 }
             }
             else if (teleportButton.GetStateUp(SteamVR_Input_Sources.Any))
             {
                 for (int i = 0; i < transform.childCount; i++)
                 {
-                    transform.GetChild(i).gameObject.SetActive(isActive[i]);
+                    if(transform.GetChild(i) != null)
+                    {
+                        transform.GetChild(i).gameObject.SetActive(isActive[i]);
+                    }
                 }
             }
         }
@@ -187,14 +184,6 @@ public class GridBuilder : MonoBehaviour
         }
     }
 
-    public void OnSliderValueChange()
-    {
-        xSliderText.text = xSlider.value.ToString();
-        ySliderText.text = ySlider.value.ToString();
-        rangeSlidertext.text = rangeSlider.value.ToString();
-        Invoke("UpdateGrid", 1);
-    }
-
     void ResetGrid()
     {
         for (int i = 0; i < pointsholder.Length; i++)
@@ -206,12 +195,12 @@ public class GridBuilder : MonoBehaviour
         }
     }
     
-    void UpdateGrid()
+    public void UpdateGrid()
     {
         ResetGrid();
-        CreateGrid((int)xSlider.value, (int)ySlider.value, rangeSlider.value);
-
-        transform.localScale = new Vector3(rangeSlider.value, rangeSlider.value, rangeSlider.value);
+        float rangeSliderDivided = rangeSlider.value / 10;
+        transform.localScale = new Vector3(rangeSliderDivided, rangeSliderDivided, rangeSliderDivided);
+        CreateGrid((int)xSlider.value, (int)ySlider.value, rangeSliderDivided);
     }
 
 }

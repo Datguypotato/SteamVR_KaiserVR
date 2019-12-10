@@ -11,10 +11,20 @@ public class VRSlider : MonoBehaviour
     private void Awake()
     {
         slider = GetComponent<Slider>();
+
+        OnSliderChange();
     }
 
     public void OnSliderChange()
     {
-        sliderText.text = slider.value.ToString();
+        if (slider.wholeNumbers)
+        {
+            sliderText.text = slider.value.ToString();
+        }
+        else
+        {
+            float newValue = slider.value / 10f;
+            sliderText.text = newValue.ToString("0.00") + "dm";
+        }
     }
 }

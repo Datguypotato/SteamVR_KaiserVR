@@ -175,7 +175,7 @@ namespace Valve.VR.InteractionSystem
 				TeleportArea teleportArea = Selection.activeTransform.GetComponent<TeleportArea>();
 				if ( teleportArea != null )
 				{
-					teleportArea.UpdateVisualsInEditor();
+					//teleportArea.UpdateVisualsInEditor();
 				}
 			}
 		}
@@ -191,7 +191,7 @@ namespace Valve.VR.InteractionSystem
 				TeleportArea teleportArea = Selection.activeTransform.GetComponent<TeleportArea>();
 				if ( GUI.changed && teleportArea != null )
 				{
-					teleportArea.UpdateVisualsInEditor();
+					//teleportArea.UpdateVisualsInEditor();
 				}
 			}
 		}

@@ -88,13 +88,11 @@ public class VR_MaterialPicker : MonoBehaviour
             if(materialPicker.GetComponent<Renderer>().material.mainTexture == resourceMaterials[i].mainTexture)
             {
                 arrayTest = i;
-                Debug.Log("1");
             }
 
             if(secondMaterialPicker.GetComponent<Renderer>().material.mainTexture == resourceMaterials[i].mainTexture)
             {
                 secondArrayTest = i;
-                Debug.Log("2");
             }
         }
     }

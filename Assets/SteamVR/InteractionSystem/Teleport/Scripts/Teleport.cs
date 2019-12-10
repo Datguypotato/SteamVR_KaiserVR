@@ -380,8 +380,8 @@ namespace Valve.VR.InteractionSystem
 				if ( showPlayAreaMarker )
 				{
 					//Show the play area marker if this is a teleport area
-					TeleportArea teleportArea = pointedAtTeleportMarker as TeleportArea;
-					if ( teleportArea != null && !teleportArea.locked && playAreaPreviewTransform != null )
+					TeleportMarkerBase TeleportMarkerBase = pointedAtTeleportMarker as TeleportMarkerBase;
+					if ( TeleportMarkerBase != null && !TeleportMarkerBase.locked && playAreaPreviewTransform != null )
 					{
 						Vector3 offsetToUse = playerFeetOffset;
 
@@ -496,8 +496,8 @@ namespace Valve.VR.InteractionSystem
 			if ( debugFloor )
 			{
 				//Debug floor
-				TeleportArea teleportArea = pointedAtTeleportMarker as TeleportArea;
-				if ( teleportArea != null )
+				TeleportMarkerBase TeleportMarkerBase = pointedAtTeleportMarker as TeleportMarkerBase;
+				if ( TeleportMarkerBase != null )
 				{
 					if ( floorFixupMaximumTraceDistance > 0.0f )
 					{
@@ -874,8 +874,8 @@ namespace Valve.VR.InteractionSystem
 			}
 
 			// Find the actual floor position below the navigation mesh
-			TeleportArea teleportArea = teleportingToMarker as TeleportArea;
-			if ( teleportArea != null )
+			TeleportMarkerBase TeleportMarkerBase = teleportingToMarker as TeleportMarkerBase;
+			if ( TeleportMarkerBase != null )
 			{
 				if ( floorFixupMaximumTraceDistance > 0.0f )
 				{

@@ -31,11 +31,11 @@ public class VR_DeleteOnGrabbed : MonoBehaviour
         {
             //GameObject currentGo = new GameObject();
 
-            //if (fixedJointGrab.CurrentGrabbedObject != null)
-            //{
-            //    currentGo = fixedJointGrab.CurrentGrabbedObject;
-            //}
-            if (pointer.highlightedObject != null && pointer.highlightedObject.CompareTag("GridObject"))
+            if (fixedJointGrab.CurrentGrabbedObject != null)
+            {
+                currentGo = fixedJointGrab.CurrentGrabbedObject;
+            }
+            else if (pointer.highlightedObject != null && pointer.highlightedObject.CompareTag("GridObject"))
             {
                 currentGo = pointer.highlightedObject;
             }

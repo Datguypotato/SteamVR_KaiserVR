@@ -24,7 +24,7 @@ public class VRSlider : MonoBehaviour
         else
         {
             float newValue = slider.value / 10f;
-            sliderText.text = newValue.ToString("0.00") + "dm";
+            sliderText.text = newValue.ToString("0.0") + "M";
         }
     }
 }

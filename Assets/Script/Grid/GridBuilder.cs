@@ -16,13 +16,15 @@ public class GridBuilder : MonoBehaviour
 
     [Header("Grid size")]
     public int xStartSize;
-    public int yStartSize;
+    public int zStartSize;
     
     public float startRange = 1;
 
     [Header("Slider")]
     public Slider xSlider;
     public Slider ySlider;
+    public Text zText;
+
     public Slider rangeSlider;
 
 
@@ -34,7 +36,7 @@ public class GridBuilder : MonoBehaviour
 
     Transform[] pointsholder;
 
-    public bool[] isActive;
+    bool[] isActive;
     int lastTabIndex;
 
     [HideInInspector]
@@ -61,13 +63,20 @@ public class GridBuilder : MonoBehaviour
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
+
         pointsholder = new Transform[transform.childCount];
+        isActive = new bool[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
             pointsholder[i] = transform.GetChild(i);
         }
-        CreateGrid(xStartSize, yStartSize, startRange);
+        //CreateGrid(xStartSize, 0, zStartSize, startRange);
+    }
+
+    private void Start()
+    {
+        UpdateGrid();
     }
 
     private void Update()
@@ -76,8 +85,7 @@ public class GridBuilder : MonoBehaviour
         {
             if (teleportButton.GetStateDown(SteamVR_Input_Sources.Any))
             {
-                isActive = new bool[transform.childCount];
-                for (int i = 0; i < transform.childCount; i++)
+                for (int i = 0; i < pointsholder.Length; i++)
                 {
                     if (transform.GetChild(i) != null)
                     {
@@ -88,7 +96,7 @@ public class GridBuilder : MonoBehaviour
             }
             else if (teleportButton.GetStateUp(SteamVR_Input_Sources.Any))
             {
-                for (int i = 0; i < transform.childCount; i++)
+                for (int i = 0; i < pointsholder.Length; i++)
                 {
                     if(transform.GetChild(i) != null)
                     {
@@ -139,47 +147,52 @@ public class GridBuilder : MonoBehaviour
         }
     }
 
-    void CreateGrid(int xSize, int ySize, float range)
+    void CreateGrid(int xSize, int ySize, int zSize,float range)
     {
         float offset = range / 2;
 
         for (int x = 0; x < xSize; x++)
         {
-            for (int y = 0; y < ySize; y++)
+            for (int y = 0; y < zSize; y++)
             {
-                float xRanged = x * range;
-                float yRanged = y * range;
-
-                Vector3 xOffset = new Vector3(xRanged - offset, 0, yRanged);
-                Vector3 yOffset = new Vector3(xRanged, 0, yRanged - offset);
-
-                Vector3 firstLayerX = new Vector3(xRanged - offset, 0, 0);
-                Vector3 firstLayerY = new Vector3(0, 0, yRanged - offset);
-
-
-                //pillar point
-                GameObject crosses = Instantiate(columPoint, transform.position + new Vector3(xRanged, 0, yRanged), transform.rotation, pointsholder[0]);
-
-                crosses.name = "Grid X: " + x + " Y: " + y;
-
-                //mid point
-                if (x > 0 && y > 0)
+                for (int z = 0; z < ySize; z++)
                 {
-                    
-                    Instantiate(wallPoint, transform.position + xOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-                    Instantiate(wallPoint, transform.position + yOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                    float xRanged = x * range;
+                    float yRanged = y * range;
+                    float zRanged = z * range * 3;
 
-                    Instantiate(wallPoint, transform.position + firstLayerX, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-                    Instantiate(wallPoint, transform.position + firstLayerY, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                    Vector3 xOffset = new Vector3(xRanged - offset, 0, yRanged);
+                    Vector3 yOffset = new Vector3(xRanged, 0, yRanged - offset);
+                    Vector3 zOffset = new Vector3(0, zRanged, 0);
 
-                //Floor point
+                    Vector3 firstLayerX = new Vector3(xRanged - offset, 0, 0);
+                    Vector3 firstLayerY = new Vector3(0, 0, yRanged - offset);
 
-                    Vector3 FloorPos = new Vector3(xRanged - offset, 0, yRanged - offset);
-                    Instantiate(floorPoints, transform.position + FloorPos, Quaternion.identity, pointsholder[2]);
+
+                    //pillar point
+                    GameObject crosses = Instantiate(columPoint, transform.position + new Vector3(xRanged, 0, yRanged) + zOffset, transform.rotation, pointsholder[0]);
+
+                    crosses.name = "Grid X: " + x + " Y: " + y;
+
+                    //mid point
+                    if (x > 0 && y > 0)
+                    {
+
+                        Instantiate(wallPoint, transform.position + xOffset + zOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                        Instantiate(wallPoint, transform.position + yOffset + zOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+
+                        Instantiate(wallPoint, transform.position + firstLayerX + zOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+                        Instantiate(wallPoint, transform.position + firstLayerY + zOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
+
+                        //Floor point
+
+                        Vector3 FloorPos = new Vector3(xRanged - offset, 0, yRanged - offset);
+                        Instantiate(floorPoints, transform.position + FloorPos + zOffset, Quaternion.identity, pointsholder[2]);
+                    }
+
+                    //create more grid points if needed
+
                 }
-
-                //create more grid points if needed
-
             }
         }
     }
@@ -199,8 +212,8 @@ public class GridBuilder : MonoBehaviour
     {
         ResetGrid();
         float rangeSliderDivided = rangeSlider.value / 10;
-        transform.localScale = new Vector3(rangeSliderDivided, rangeSliderDivided, rangeSliderDivided);
-        CreateGrid((int)xSlider.value, (int)ySlider.value, rangeSliderDivided);
+        transform.localScale = new Vector3(rangeSliderDivided, 0, rangeSliderDivided);
+        CreateGrid((int)xSlider.value, int.Parse(zText.text), (int)ySlider.value, rangeSliderDivided);
     }
 
 }

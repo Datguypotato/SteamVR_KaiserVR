@@ -132,21 +132,11 @@ public class VR_GridPointer : MonoBehaviour
         {
             if (tempObject == null)
             {
-                tempObject = Instantiate(GhostObject);
+                tempObject = Instantiate(GhostObject, gridManager);
                 tempObject.layer = 2;
 
-                if(gridObject.myType == GridTypes.Floor)
-                {
-                    for (int i = 0; i < tempObject.transform.childCount; i++)
-                    {
-                        SetGhostShaders(tempObject.transform.GetChild(i).GetComponent<MeshRenderer>().materials);
-                    }
-                }
-                else
-                {
-                    SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);
-                }
-                
+                SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);
+
 
             }
             else if(gridObject.myType == GridTypes.Colum)

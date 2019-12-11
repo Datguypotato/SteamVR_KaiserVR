@@ -10,5 +10,6 @@ public enum GridTypes
 {
     wall,
     Colum,
-    Floor
+    Floor,
+    objectsnap
 }

@@ -41,6 +41,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
         }
     }
 
+    //check multiple conditions
     bool IsGround()
     {
         if (pointer.highlightedObject != null)

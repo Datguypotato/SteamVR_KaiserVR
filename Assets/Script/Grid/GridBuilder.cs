@@ -212,7 +212,7 @@ public class GridBuilder : MonoBehaviour
     {
         ResetGrid();
         float rangeSliderDivided = rangeSlider.value / 10;
-        transform.localScale = new Vector3(rangeSliderDivided, 0, rangeSliderDivided);
+        transform.localScale = new Vector3(rangeSliderDivided, 1, rangeSliderDivided);
         CreateGrid((int)xSlider.value, int.Parse(zText.text), (int)ySlider.value, rangeSliderDivided);
     }
 

@@ -1,0 +1,237 @@
+fileFormatVersion: 2
+guid: b9cda705e003f9a4a9fe6afd122f7cc2
+ModelImporter:
+  serializedVersion: 25
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: aanrecht 2 lades001
+  - first:
+      1: 100002
+    second: //RootNode
+  - first:
+      1: 100004
+    second: la boven030
+  - first:
+      1: 100006
+    second: la boven031
+  - first:
+      4: 400000
+    second: aanrecht 2 lades001
+  - first:
+      4: 400002
+    second: //RootNode
+  - first:
+      4: 400004
+    second: la boven030
+  - first:
+      4: 400006
+    second: la boven031
+  - first:
+      21: 2100000
+    second: 'Material #78'
+  - first:
+      21: 2100002
+    second: 'Material #73'
+  - first:
+      21: 2100004
+    second: 'Material #39'
+  - first:
+      21: 2100006
+    second: 'Material #74'
+  - first:
+      23: 2300000
+    second: aanrecht 2 lades001
+  - first:
+      23: 2300002
+    second: la boven030
+  - first:
+      23: 2300004
+    second: la boven031
+  - first:
+      33: 3300000
+    second: aanrecht 2 lades001
+  - first:
+      33: 3300002
+    second: la boven030
+  - first:
+      33: 3300004
+    second: la boven031
+  - first:
+      43: 4300000
+    second: aanrecht 2 lades001
+  - first:
+      43: 4300002
+    second: la boven031
+  - first:
+      43: 4300004
+    second: la boven030
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #134'
+    second: {fileID: 2100000, guid: c40f9e9fcda103245a878aad2f32ee04, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #39'
+    second: {fileID: 2100000, guid: d25e8b516c36983438e439b2f59e0ddb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #73'
+    second: {fileID: 2100000, guid: 61320027cf17a3647b6af1e41fc4143b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #74'
+    second: {fileID: 2100000, guid: 36e3eaa8b108efe43846785c2d382616, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #76'
+    second: {fileID: 2100000, guid: d803253b7da82e240bda0b414f36d6f5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 'Material #78'
+    second: {fileID: 2100000, guid: b7ba3663e0c3b0243bbc9770ef44f7f4, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: 635427be6769f2b79f3e2b624839c345
+    second: {fileID: 2800000, guid: b8df8c3f8ac46084cbde57ddcdd91894, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Blomberg_Oven_OEN9302X_StainlessSteel_FrontClosed
+    second: {fileID: 2800000, guid: 832f60c759dba4c45a2e688df6d6130a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Naamloos-2
+    second: {fileID: 2800000, guid: e439c3b598900a345a550aaebd6db771, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TexturesCom_MarbleBase0149_1_seamless_S
+    second: {fileID: 2800000, guid: b1fa1bfcdc1bcf54880cc944de042bc7, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TexturesCom_WoodFine0043_M
+    second: {fileID: 2800000, guid: a0ae87e4085775a4ca0464bd6459496d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: TexturesCom_WoodPlanksClean0023_1_seamless_S
+    second: {fileID: 2800000, guid: 2f04af244de1ced4bb32a2358c4903c3, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: image
+    second: {fileID: 2800000, guid: bcc8fddce5588054aaf144c4ba40d953, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: induction
+    second: {fileID: 2800000, guid: cf4e7168a360a394f860784e18b91e2d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: sink
+    second: {fileID: 2800000, guid: d7027d1aa0db67c489b9b906399a5b7f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: wood bump
+    second: {fileID: 2800000, guid: f5c532d133801e94ea2805720a4cfe04, type: 3}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

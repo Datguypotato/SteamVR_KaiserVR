@@ -66,11 +66,11 @@ public class VR_GridPointer : MonoBehaviour
             Destroy(tempObject);
         }
 
-        //if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
-        //{
-        //    desiredRotation = needRotate ? Vector3.zero : new Vector3(0, 90, 0);
-        //    needRotate = !needRotate;
-        //}
+        if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
+        {
+            desiredRotation = needRotate ? Vector3.zero : new Vector3(0, 180, 0);
+            needRotate = !needRotate;
+        }
     }
 
     //check multiple conditions
@@ -158,11 +158,11 @@ public class VR_GridPointer : MonoBehaviour
 
     void SetGhostShaders(Material[] mats)
     {
-        for (int i = 0; i < mats.Length; i++)
-        {
-            StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
-            //mats[i].shader = ghostShader;
-        }
+        //for (int i = 0; i < mats.Length; i++)
+        //{
+        //    StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
+        //    //mats[i].shader = ghostShader;
+        //}
     }
 
     void PlaceObject(GameObject placeable, Transform t)

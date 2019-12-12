@@ -20,7 +20,10 @@ public class UIpanel : MonoBehaviour
 
     private ViewportContent[] windowControllers;
     private ButtonUIController[] tabButtons;
-    private GameObject[] windows;
+    public GameObject[] windows;
+
+    public delegate void EventPanel(int index);
+    public EventPanel OntabSwitch;
 
     public GameObject NextButton
     {
@@ -222,6 +225,7 @@ public class UIpanel : MonoBehaviour
             tabButtons[index].SetHighLight(true);
         }
 
+        OntabSwitch?.Invoke(index);
         windows[index].SetActive(true);
     }
 

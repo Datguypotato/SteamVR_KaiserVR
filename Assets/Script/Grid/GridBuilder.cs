@@ -14,9 +14,9 @@ public class GridBuilder : MonoBehaviour
     public GameObject wallPoint;
     public GameObject floorPoints;
 
-    [Header("Grid size")]
-    public int xStartSize;
-    public int zStartSize;
+    //[Header("Grid size")]
+    //public int xStartSize;
+    //public int zStartSize;
     
     public float startRange = 1;
 
@@ -46,7 +46,8 @@ public class GridBuilder : MonoBehaviour
     private void OnEnable()
     {
         containerWindow.Open += ShowGrid;
-        
+        containerWindow.Close += HideGridWrapper;
+
         panelMover.ClosePanel += HideGrid;
         panelMover.OpenPanel += LastShowGrid;
 
@@ -55,6 +56,7 @@ public class GridBuilder : MonoBehaviour
     private void OnDisable()
     {
         containerWindow.Open -= ShowGrid;
+        containerWindow.Close -= HideGridWrapper;
 
         panelMover.ClosePanel -= HideGrid;
         panelMover.OpenPanel -= LastShowGrid;
@@ -137,6 +139,11 @@ public class GridBuilder : MonoBehaviour
         {
             objectSpawner.ButtonAction(0);
         }
+    }
+
+    private void HideGridWrapper(int i)
+    {
+        HideGrid();
     }
 
     private void HideGrid()

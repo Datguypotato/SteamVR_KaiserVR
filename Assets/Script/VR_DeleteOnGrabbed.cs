@@ -5,6 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// with this script you can delete object you grabbed with VR_FixedJointGrab
+/// and grid objects
 /// </summary>
 
 [RequireComponent(typeof(VR_FixedJointGrab))]
@@ -17,7 +18,7 @@ public class VR_DeleteOnGrabbed : MonoBehaviour
     public GameObject currentGo;
 
     VR_FixedJointGrab fixedJointGrab;
-    public UiPointer pointer;
+    UiPointer pointer;
 
     private void Awake()
     {

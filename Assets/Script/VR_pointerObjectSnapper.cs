@@ -9,11 +9,15 @@ public class VR_pointerObjectSnapper : MonoBehaviour
     UiPointer pointer;
     public GameObject selectedObject;
     public SteamVR_Action_Boolean placeObjectButton;
+    public SteamVR_Action_Boolean RotateButton;
+
+
     public Shader ghostShader;
     public float offset = 0.6f;
 
     GameObject ghostObject;
 
+    public Vector3 desiredRotation;
     public List<Transform> childList;
 
     private void Awake()
@@ -28,17 +32,24 @@ public class VR_pointerObjectSnapper : MonoBehaviour
         {
             SetGhost(pointer.hit.point);
 
-            placeObject(pointer.hit.point);
+            placeObject(pointer.hit.point, Quaternion.identity);
 
         }
         else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObject>() != null)
         {
-            if(pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.objectsnap)
-            SideSnap();
+            //if(pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.objectsnap)
+                SideSnap();
+
         }
         else if (ghostObject != null)
         {
             Destroy(ghostObject);
+        }
+
+
+        if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
+        {
+            desiredRotation += new Vector3(0, 90, 0);
         }
     }
 
@@ -56,9 +67,9 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
     void SetGhost(Vector3 spawnOffset)
     {
-        if (ghostObject == null)
+        if (ghostObject == null && selectedObject != null)
         {
-            ghostObject = Instantiate(selectedObject, spawnOffset, Quaternion.identity);
+            ghostObject = Instantiate(selectedObject, spawnOffset, Quaternion.Euler(desiredRotation));
             ghostObject.layer = 2;
 
             childList.Clear();
@@ -66,22 +77,23 @@ public class VR_pointerObjectSnapper : MonoBehaviour
             for (int i = 0; i < childList.Count; i++)
             {
                 childList[i].gameObject.layer = 2;
-                SetGhostShaders(childList[i].GetComponent<MeshRenderer>().materials);
+                //SetGhostShaders(childList[i].GetComponent<MeshRenderer>().materials);
             }
         }
-        else
+        else if (ghostObject != null)
         {
+            ghostObject.transform.rotation = Quaternion.Euler(desiredRotation);
             ghostObject.transform.position = spawnOffset;
         }
     }
 
     void SetGhostShaders(Material[] mats)
     {
-        for (int i = 0; i < mats.Length; i++)
-        {
-            StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
-            //mats[i].shader = ghostShader;
-        }
+        //for (int i = 0; i < mats.Length; i++)
+        //{
+        //    StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
+        //    //mats[i].shader = ghostShader;
+        //}
     }
     
     void SideSnap()
@@ -105,15 +117,15 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
         if (snapPoint != Vector3.zero)
         {
-            placeObject(snapPoint);
+            placeObject(snapPoint, pointer.hit.transform.rotation);
         }
     }
 
-    void placeObject(Vector3 pos)
+    void placeObject(Vector3 pos, Quaternion spawnRotation)
     {
         if (placeObjectButton.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
-            GameObject spawnenObject = Instantiate(selectedObject, pos, Quaternion.identity);
+            GameObject spawnenObject = Instantiate(selectedObject, pos, spawnRotation);
         }
     }
 

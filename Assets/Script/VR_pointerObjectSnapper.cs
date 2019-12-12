@@ -31,7 +31,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
             placeObject(pointer.hit.point);
 
         }
-        else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.objectsnap)
+        else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<Interactable>() != null)
         {
             SideSnap();
         }

@@ -32,6 +32,7 @@ public class GridContainerWindow : ViewportContent
     public GameObject leftHandPrefab;
     public GameObject rightHandPrefab;
 
+    //doesn't work :(
     public delegate void OnWindow(int i);
     public event OnWindow Open;
     public event OnWindow Close;
@@ -91,7 +92,7 @@ public class GridContainerWindow : ViewportContent
         //Debug.Log(currentPage);
         pages[currentPage].GetComponent<ViewportContent>().CloseWindow();
 
-        //this is for VR_SwapHandModel and grid builder
+        //this is for VR_SwapHandModel
         Close?.Invoke(0);
     }
 

@@ -221,7 +221,7 @@ public class UIpanel : MonoBehaviour
             Array.ForEach(tabButtons, obj => obj.SetHighLight(false));
             tabButtons[index].SetHighLight(true);
         }
-        
+
         windows[index].SetActive(true);
     }
 

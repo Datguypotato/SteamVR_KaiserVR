@@ -38,7 +38,6 @@ public class GridBuilder : MonoBehaviour
 
     bool[] isActive;
     int lastTabIndex;
-    public bool openingSettings;
 
     [HideInInspector]
     //this get assigned in the VRGridObjectSpawner
@@ -47,16 +46,15 @@ public class GridBuilder : MonoBehaviour
     private void OnEnable()
     {
         containerWindow.Open += ShowGrid;
-        containerWindow.Close += HideGridWrapper;
         
         panelMover.ClosePanel += HideGrid;
         panelMover.OpenPanel += LastShowGrid;
+
     }
 
     private void OnDisable()
     {
         containerWindow.Open -= ShowGrid;
-        containerWindow.Close -= HideGridWrapper;
 
         panelMover.ClosePanel -= HideGrid;
         panelMover.OpenPanel -= LastShowGrid;
@@ -124,25 +122,20 @@ public class GridBuilder : MonoBehaviour
         {
             objectSpawner.ButtonAction(0);
         }
-
-
     }
 
     void LastShowGrid()
     {
-        if (containerWindow.gameObject.activeInHierarchy)
+        for (int i = 0; i < pointsholder.Length; i++)
         {
-            for (int i = 0; i < pointsholder.Length; i++)
-            {
-                pointsholder[i].gameObject.SetActive(false);
-            }
-            pointsholder[lastTabIndex].gameObject.SetActive(true);
+            pointsholder[i].gameObject.SetActive(false);
+        }
+        pointsholder[lastTabIndex].gameObject.SetActive(true);
 
-            //set default object
-            if (objectSpawner != null)
-            {
-                objectSpawner.ButtonAction(0);
-            }
+        //set default object
+        if (objectSpawner != null)
+        {
+            objectSpawner.ButtonAction(0);
         }
     }
 
@@ -152,11 +145,6 @@ public class GridBuilder : MonoBehaviour
         {
             pointsholder[i].gameObject.SetActive(false);
         }
-    }
-
-    private void HideGridWrapper(int xD)
-    {
-        HideGrid();
     }
 
     void CreateGrid(int xSize, int ySize, int zSize,float range)

@@ -160,7 +160,8 @@ public class VR_GridPointer : MonoBehaviour
     {
         for (int i = 0; i < mats.Length; i++)
         {
-            mats[i].shader = ghostShader;
+            StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
+            //mats[i].shader = ghostShader;
         }
     }
 

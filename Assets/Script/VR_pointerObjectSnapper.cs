@@ -31,8 +31,9 @@ public class VR_pointerObjectSnapper : MonoBehaviour
             placeObject(pointer.hit.point);
 
         }
-        else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<Interactable>() != null)
+        else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObject>() != null)
         {
+            if(pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.objectsnap)
             SideSnap();
         }
         else if (ghostObject != null)
@@ -78,7 +79,8 @@ public class VR_pointerObjectSnapper : MonoBehaviour
     {
         for (int i = 0; i < mats.Length; i++)
         {
-            mats[i].shader = ghostShader;
+            StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
+            //mats[i].shader = ghostShader;
         }
     }
     

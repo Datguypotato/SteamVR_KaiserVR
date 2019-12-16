@@ -24,7 +24,7 @@ public class VR_RotateMoveObject : MonoBehaviour
 
         if(fixedJointGrab.CurrentGrabbedObject != null)
         {
-            RotateObject(fixedJointGrab.CurrentGrabbedObject.transform.GetChild(0).gameObject);
+            RotateObject(fixedJointGrab.CurrentGrabbedObject);
             MoveObject(gameObject);
         }
         else

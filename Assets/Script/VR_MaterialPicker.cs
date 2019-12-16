@@ -17,13 +17,13 @@ public class VR_MaterialPicker : MonoBehaviour
     public GameObject secondMaterialPicker;
 
     [Space(5)]
-    public List<GameObject> snappedObjects;
-    public VR_SnapZone[] snapzones;
+    private List<GameObject> snappedObjects;
+    private VR_SnapZone[] snapzones;
 
-    public Material[] resourceMaterials;
-    public List<Renderer> snappedRenderer;
+    private Material[] resourceMaterials;
+    private List<Renderer> snappedRenderer;
 
-    public List<GameObject> childList;
+    private List<GameObject> childList;
     public VRMaterialSwitcher switcher;
 
     public int arrayTest;

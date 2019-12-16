@@ -49,7 +49,8 @@ public class UiPointer : MonoBehaviour
 
     //get changed in VR_FixedJointGrab
     public bool isgrabbing;
-    float latestFloat;
+
+    Vector3 startScale;
 
     private void Awake()
     {
@@ -64,6 +65,8 @@ public class UiPointer : MonoBehaviour
     {
         // current.currentInputModule does not work
         inputModule = EventSystem.current.gameObject.GetComponent<VR_Inputmodule>();
+
+        startScale = dot.transform.localScale;
     }
 
     private void Update()
@@ -88,6 +91,8 @@ public class UiPointer : MonoBehaviour
 
             // Get the closest one
             targetLength = Mathf.Min(colliderDistance, canvasDistance);
+
+            UpdateDot(targetLength, canvasDistance);
         }
 
         // Default
@@ -99,6 +104,20 @@ public class UiPointer : MonoBehaviour
         // Set linerenderer
         lineRenderer.SetPosition(0, transform.parent.transform.position);
         lineRenderer.SetPosition(1, endPosition);
+    }
+
+    void UpdateDot(float length, float canvas)
+    {
+        if(length != 0 && length == canvas)
+        {
+            dot.transform.localScale = startScale / 2;
+            //Debug.Log("0");
+        }
+        else
+        {
+            dot.transform.localScale = startScale;
+            //Debug.Log("1");
+        }
     }
 
     private RaycastHit CreateRaycast()

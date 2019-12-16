@@ -175,7 +175,6 @@ MonoBehaviour:
   tabName: Objects
   tabButtonImage: {fileID: 21300000, guid: 926c46f907d473845929540b31a3270a, type: 3}
   tabButtonScale: 0.6
-  handPrefab: {fileID: 0}
   subTabButton: {fileID: 1284830017324334, guid: b849a298ef5a38d4db49d37191afffbe,
     type: 3}
   subTabDiameters: {fileID: 8462370937916395232}
@@ -410,7 +409,7 @@ RectTransform:
   m_LocalScale: {x: 0.99868983, y: 0.99869007, z: 0.99869007}
   m_Children: []
   m_Father: {fileID: 4125618146577096231}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -485,15 +484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de80e404526a71243b09e98900c3439b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedObjectTag: 
-  ObjectsPrefab:
-  - {fileID: 0}
-  - {fileID: 0}
+  spawnableprefabs: []
+  spawnableObjects: []
   showName: 1
-  objects:
-  - spawnObject: {fileID: 0}
-    objectImage: {fileID: 0}
-    displayName: 0
 --- !u!1 &3700288422833269205
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,13 +673,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cc66768d5ab674e8a584f0b0c10ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedObjectTag: 
-  ObjectsPrefab: []
+  spawnableprefabs: []
+  spawnableObjects: []
   showName: 0
-  objects:
-  - spawnObject: {fileID: 170850, guid: 8e13c6e5a21aeea4db3c25ef0e529308, type: 3}
-    objectImage: {fileID: 21300000, guid: e8763766acae5bc4e86c79f47206d171, type: 3}
-    displayName: 0
+  spawnedObjectTag: 
 --- !u!1 &4487918785151074935
 GameObject:
   m_ObjectHideFlags: 0
@@ -862,7 +852,6 @@ MonoBehaviour:
   tabName: Materials
   tabButtonImage: {fileID: 21300000, guid: 1fd76290fe16dfd43a74e3bc3030daba, type: 3}
   tabButtonScale: 0.6
-  handPrefab: {fileID: 0}
   subTabButton: {fileID: 1284830017324334, guid: b849a298ef5a38d4db49d37191afffbe,
     type: 3}
   subTabDiameters: {fileID: 960256186995252745}
@@ -1023,7 +1012,7 @@ RectTransform:
   m_LocalScale: {x: 0.99868983, y: 0.99869007, z: 0.99869007}
   m_Children: []
   m_Father: {fileID: 4125618146577096231}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1352,13 +1341,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03cc66768d5ab674e8a584f0b0c10ed1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnedObjectTag: InstantiatedObject
-  ObjectsPrefab: []
+  spawnableprefabs: []
+  spawnableObjects: []
   showName: 0
-  objects:
-  - spawnObject: {fileID: 170850, guid: 8e13c6e5a21aeea4db3c25ef0e529308, type: 3}
-    objectImage: {fileID: 21300000, guid: 6b2b1eb8d7e9eee4aa28725a33504a83, type: 3}
-    displayName: 0
+  spawnedObjectTag: InstantiatedObject
 --- !u!1 &8263559121977296348
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,6 +1397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tabButton: {fileID: 1284830017324334, guid: b849a298ef5a38d4db49d37191afffbe, type: 3}
+  windows: []
 --- !u!1 &8299060293340942837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,8 +1517,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 6297496490958579089}
   - {fileID: 1810743848239193067}
+  - {fileID: 6297496490958579089}
   m_Father: {fileID: 7904006645404941612}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

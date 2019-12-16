@@ -11,6 +11,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
     public SteamVR_Action_Boolean placeObjectButton;
     public SteamVR_Action_Boolean RotateButton;
 
+    public GameObject MoveableParent;
 
     public Shader ghostShader;
     public float offset = 0.6f;
@@ -117,15 +118,39 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
         if (snapPoint != Vector3.zero)
         {
-            placeObject(snapPoint, pointer.hit.transform.rotation);
+            placeObject(snapPoint, pointer.hit.transform.rotation, pointer.hit.transform.parent);
         }
     }
 
+    //if snap to side 
+    void placeObject(Vector3 pos, Quaternion spawnRotation, Transform parent)
+    {
+        if (placeObjectButton.GetStateDown(SteamVR_Input_Sources.RightHand) && selectedObject != null)
+        {
+            if(parent != null)
+            {
+                GameObject spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
+                spawnObject.transform.parent = parent;
+            }
+            else
+            {
+                GameObject spawnenObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
+                Debug.Log("There was no parent");
+            }
+        }
+    }
+
+    //if snap to ground
     void placeObject(Vector3 pos, Quaternion spawnRotation)
     {
-        if (placeObjectButton.GetStateDown(SteamVR_Input_Sources.RightHand))
+        if (placeObjectButton.GetStateDown(SteamVR_Input_Sources.RightHand) && selectedObject != null)
         {
-            GameObject spawnenObject = Instantiate(selectedObject, pos, spawnRotation);
+            GameObject move = new GameObject("SnapCollection");
+            move.transform.position = pos;
+            GameObject spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation), move.transform);
+            EditGridObject edit = Instantiate(MoveableParent, pos + new Vector3(0,1,0), Quaternion.identity).GetComponent<EditGridObject>();
+            edit.oldestObject = spawnObject;
+            edit.grip = placeObjectButton;
         }
     }
 
@@ -144,3 +169,8 @@ public class VR_pointerObjectSnapper : MonoBehaviour
         }
     }
 }
+
+
+
+//todo this is so bad i need to rework this
+//if this still exist this mean i didn't do anything about it and you have all the right to be mad at me

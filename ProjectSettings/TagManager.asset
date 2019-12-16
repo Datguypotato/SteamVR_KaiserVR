@@ -6,6 +6,8 @@ TagManager:
   tags:
   - FxTemporaire
   - MaterialChangeAble
+  - GridObject
+  - GridObjectMove
   layers:
   - Default
   - TransparentFX

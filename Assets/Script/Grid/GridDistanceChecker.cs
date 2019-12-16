@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class GridDistanceChecker : MonoBehaviour
 {
-    public Transform[] childrenTransform = new Transform[4];
+    public Transform[] childrenTransform;
 
     private void Awake()
     {
+        childrenTransform = new Transform[transform.childCount];
         for (int i = 0; i < childrenTransform.Length; i++)
         {
             //childrenTransform[i] = transform.GetChild(i);

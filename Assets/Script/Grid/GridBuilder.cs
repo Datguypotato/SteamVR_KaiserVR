@@ -27,7 +27,6 @@ public class GridBuilder : MonoBehaviour
 
     public Slider rangeSlider;
 
-
     [Space(10)]
 
     [Tooltip("Enable this if you want to hide the grid on Teleport")]
@@ -38,33 +37,18 @@ public class GridBuilder : MonoBehaviour
 
     bool[] isActive;
     int lastTabIndex;
+    int activeMenu;
 
     [HideInInspector]
     //this get assigned in the VRGridObjectSpawner
     public VRGridObjectSpawner objectSpawner;
 
-    private void OnEnable()
-    {
-        containerWindow.Open += ShowGrid;
-        containerWindow.Close += HideGridWrapper;
-
-        panelMover.ClosePanel += HideGrid;
-        panelMover.OpenPanel += LastShowGrid;
-
-    }
-
-    private void OnDisable()
-    {
-        containerWindow.Open -= ShowGrid;
-        containerWindow.Close -= HideGridWrapper;
-
-        panelMover.ClosePanel -= HideGrid;
-        panelMover.OpenPanel -= LastShowGrid;
-    }
+    UIpanel panel;
 
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
+        panel = FindObjectOfType<UIpanel>();
 
         pointsholder = new Transform[transform.childCount];
         isActive = new bool[transform.childCount];
@@ -76,6 +60,32 @@ public class GridBuilder : MonoBehaviour
         //CreateGrid(xStartSize, 0, zStartSize, startRange);
     }
 
+    private void OnEnable()
+    {
+        containerWindow.Open += ShowPoint;
+        containerWindow.Close += HideGridWrapper;
+
+        panelMover.ClosePanel += HideGrid;
+        panelMover.OpenPanel += LastShowGrid;
+
+        panel.OntabSwitch += Panel_OntabSwitch;
+
+    }
+
+    private void Panel_OntabSwitch(int index)
+    {
+        activeMenu = index;
+    }
+
+    private void OnDisable()
+    {
+        containerWindow.Open -= ShowPoint;
+        containerWindow.Close -= HideGridWrapper;
+
+        panelMover.ClosePanel -= HideGrid;
+        panelMover.OpenPanel -= LastShowGrid;
+    }
+    
     private void Start()
     {
         UpdateGrid();
@@ -110,7 +120,7 @@ public class GridBuilder : MonoBehaviour
     }
    
 
-    void ShowGrid(int index)
+    void ShowPoint(int index)
     {
         lastTabIndex = index;
         for (int i = 0; i < pointsholder.Length; i++)
@@ -128,16 +138,19 @@ public class GridBuilder : MonoBehaviour
 
     void LastShowGrid()
     {
-        for (int i = 0; i < pointsholder.Length; i++)
+        if (activeMenu == 2)
         {
-            pointsholder[i].gameObject.SetActive(false);
-        }
-        pointsholder[lastTabIndex].gameObject.SetActive(true);
+            for (int i = 0; i < pointsholder.Length; i++)
+            {
+                pointsholder[i].gameObject.SetActive(false);
+            }
+            pointsholder[lastTabIndex].gameObject.SetActive(true);
 
-        //set default object
-        if (objectSpawner != null)
-        {
-            objectSpawner.ButtonAction(0);
+            //set default object
+            if (objectSpawner != null)
+            {
+                objectSpawner.ButtonAction(0);
+            }
         }
     }
 

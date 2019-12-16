@@ -23,7 +23,7 @@ public class UIpanel : MonoBehaviour
     public GameObject[] windows;
 
     public delegate void EventPanel(int index);
-    public EventPanel OntabSwitch;
+    public event EventPanel OntabSwitch;
 
     public GameObject NextButton
     {

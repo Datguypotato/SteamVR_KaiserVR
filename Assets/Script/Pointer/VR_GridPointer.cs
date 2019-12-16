@@ -186,7 +186,7 @@ public class VR_GridPointer : MonoBehaviour
             t.GetComponent<GridElement>().activeObject = spawnedObject;
             //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
-
+            spawnedObject.tag = "GridObject";
 
         }
     }

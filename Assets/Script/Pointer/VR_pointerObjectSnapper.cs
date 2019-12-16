@@ -1,30 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Valve.VR;
-using Valve.VR.InteractionSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class VR_pointerObjectSnapper : MonoBehaviour
 {
     UiPointer pointer;
+    VRPanelMover panelMover;
+
     public GameObject selectedObject;
     public SteamVR_Action_Boolean placeObjectButton;
     public SteamVR_Action_Boolean RotateButton;
 
-    public GameObject MoveableParent;
-
-    public Shader ghostShader;
+    public Material ghostMaterial;
     public float offset = 0.6f;
 
     GameObject ghostObject;
 
-    public Vector3 desiredRotation;
     public List<Transform> childList;
+    Vector3 desiredRotation;
+
+    bool changeSnapDir;
+    private string objectTag = "GridObject";
 
     private void Awake()
     {
         pointer = GetComponent<UiPointer>();
-        
+        panelMover = FindObjectOfType<VRPanelMover>();
     }
 
     private void Update()
@@ -33,7 +36,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
         {
             SetGhost(pointer.hit.point);
 
-            placeObject(pointer.hit.point, Quaternion.identity);
+            PlaceObject(pointer.hit.point, Quaternion.identity);
 
         }
         else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObject>() != null)
@@ -50,6 +53,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
         if (RotateButton.GetStateDown(SteamVR_Input_Sources.RightHand))
         {
+            changeSnapDir = !changeSnapDir;
             desiredRotation += new Vector3(0, 90, 0);
         }
     }
@@ -68,6 +72,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
     void SetGhost(Vector3 spawnOffset)
     {
+        Debug.Log("0");
         if (ghostObject == null && selectedObject != null)
         {
             ghostObject = Instantiate(selectedObject, spawnOffset, Quaternion.Euler(desiredRotation));
@@ -90,67 +95,67 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
     void SetGhostShaders(Material[] mats)
     {
-        //for (int i = 0; i < mats.Length; i++)
-        //{
-        //    StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
-        //    //mats[i].shader = ghostShader;
-        //}
+        for (int i = 0; i < mats.Length; i++)
+        {
+            //StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
+            mats[i] = ghostMaterial;
+        }
     }
     
     void SideSnap()
     {
         Vector3 normalHit = pointer.hit.normal;
-        normalHit = pointer.hit.transform.TransformDirection(normalHit);
-
         Vector3 snapPoint = Vector3.zero;
 
-        if (normalHit == pointer.hit.transform.right)
-        {
-            snapPoint = new Vector3(offset, 0, 0) + pointer.hit.transform.position;
-            SetGhost(snapPoint);
+        snapPoint = new Vector3(offset * normalHit.x, 0, offset * normalHit.z) + pointer.hit.transform.position;
+        desiredRotation = pointer.hit.transform.rotation.eulerAngles;
 
-        }
-        else if (normalHit == -pointer.hit.transform.right)
-        {
-            snapPoint = new Vector3(-offset, 0, 0) + pointer.hit.transform.position;
-            SetGhost(snapPoint);
-        }
+        //not needed yet
+        //if (changeSnapDir && normalHit.x != 0)
+        //{
+        //    snapPoint = new Vector3(offset * normalHit.x, 0, 0) + pointer.hit.transform.position;
+        //}
+        //else if (normalHit.z != 0)
+        //{
+        //    snapPoint = new Vector3(0, 0, offset * normalHit.z) + pointer.hit.transform.position;
+        //}
 
-        if (snapPoint != Vector3.zero)
+        if (snapPoint != pointer.hit.transform.position)
         {
-            placeObject(snapPoint, pointer.hit.transform.rotation, pointer.hit.transform.parent);
+            SetGhost(snapPoint);
+            PlaceObject(snapPoint, pointer.hit.transform.rotation, pointer.hit.transform);
         }
     }
 
     //if snap to side 
-    void placeObject(Vector3 pos, Quaternion spawnRotation, Transform parent)
+    void PlaceObject(Vector3 pos, Quaternion spawnRotation, Transform hitTransform)
     {
         if (placeObjectButton.GetStateDown(SteamVR_Input_Sources.RightHand) && selectedObject != null)
         {
-            if(parent != null)
+            GameObject spawnObject;
+            if (hitTransform != null)
             {
-                GameObject spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
-                spawnObject.transform.parent = parent;
+                spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
+                //spawnObject.transform.parent = parent;
             }
             else
             {
-                GameObject spawnenObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
+                spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
                 Debug.Log("There was no parent");
             }
+            spawnObject.tag = objectTag;
+            
         }
     }
 
     //if snap to ground
-    void placeObject(Vector3 pos, Quaternion spawnRotation)
+    void PlaceObject(Vector3 pos, Quaternion spawnRotation)
     {
+        //this need rework😀😶😏😴😫🙂☺😐🤐😪😴🙃🤔🤔
         if (placeObjectButton.GetStateDown(SteamVR_Input_Sources.RightHand) && selectedObject != null)
         {
-            GameObject move = new GameObject("SnapCollection");
-            move.transform.position = pos;
-            GameObject spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation), move.transform);
-            EditGridObject edit = Instantiate(MoveableParent, pos + new Vector3(0,1,0), Quaternion.identity).GetComponent<EditGridObject>();
-            edit.oldestObject = spawnObject;
-            edit.grip = placeObjectButton;
+            GameObject spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
+            spawnObject.tag = objectTag;
         }
     }
 
@@ -173,4 +178,5 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
 
 //todo this is so bad i need to rework this
+//like some kind of inherintance for this and GridPointer
 //if this still exist this mean i didn't do anything about it and you have all the right to be mad at me

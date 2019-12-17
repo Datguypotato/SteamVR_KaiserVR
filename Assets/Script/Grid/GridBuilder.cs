@@ -48,7 +48,6 @@ public class GridBuilder : MonoBehaviour
     public VRGridObjectSpawner objectSpawner;
 
     UIpanel panel;
-
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
@@ -240,10 +239,14 @@ public class GridBuilder : MonoBehaviour
         CreateGrid((int)xSlider.value, int.Parse(zText.text), (int)ySlider.value, rangeSliderDivided);
     }
 
+    #region savingSystem
+
     public void SaveBuild()
     {
+        // serialize
         Save save = CreateSaveGameObject();
 
+        // creating file
         BinaryFormatter bf = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/BuildingSave.Kaiser");
         bf.Serialize(file, save);
@@ -252,13 +255,95 @@ public class GridBuilder : MonoBehaviour
         Debug.Log("Saved file");
     }
 
+    public void LoadBuild()
+    {
+        if(File.Exists(Application.persistentDataPath + "/BuildingSave.Kaiser"))
+        {
+
+            // Getting save
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream file = File.Open(Application.persistentDataPath + "/BuildingSave.Kaiser", FileMode.Open);
+            Save save = (Save)bf.Deserialize(file);
+            file.Close();
+
+            // getting available objects
+            VRGridObjectSpawner[] gridObjectSpawners = FindObjectsOfType<VRGridObjectSpawner>();
+
+            //save.allposition.Length should not be the lenght need gridobject lenght
+            //todo make it spawn the right object these array are empty for some reason
+            GameObject[] columColl = new GameObject[save.allposition.Length];
+            GameObject[] wallColl = new GameObject[save.allposition.Length];
+            GameObject[] floorColl = new GameObject[save.allposition.Length];
+
+            for (int i = 0; i < gridObjectSpawners.Length; i++)
+            {
+                switch (gridObjectSpawners[i].tabType)
+                {
+                    case (GridTypes.Colum):
+                        columColl = gridObjectSpawners[i].spawnableprefabs;
+                        break;
+                    case (GridTypes.Floor):
+                        floorColl = gridObjectSpawners[i].spawnableprefabs;
+                        break;
+                    case (GridTypes.wall):
+                        Debug.Log(gridObjectSpawners[i].spawnableprefabs[i].name);
+                        wallColl = gridObjectSpawners[i].spawnableprefabs;
+                        break;
+                }
+            }
+
+            // creating objects from save
+
+            for (int i = 0; i < save.allposition.Length; i++)
+            {
+                GameObject go = new GameObject();
+                switch (save.gridtype[i])
+                {
+                    case (GridTypes.Colum):
+                        Instantiate(columColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
+                        break;
+                    case (GridTypes.Floor):
+                        Instantiate(floorColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
+                        break;
+                    case (GridTypes.wall):
+                        Debug.Log(save.objectIndex[i])
+                        Debug.Log(wallColl[save.objectIndex[i]]);
+                        Debug.Log(save.allposition[i]);
+                        Debug.Log(save.allRotation[i]);
+                        Instantiate(wallColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
+                        break;
+
+                }
+                
+            }
+
+            // setting gridsetting
+            xSlider.value = save.xGrid;
+            ySlider.value = save.yGrid;
+            zText.text = save.zGrid.ToString();
+
+            rangeSlider.value = save.gridRange;
+
+            // setting grid acording to the settings
+            UpdateGrid();
+
+            Debug.Log("Save loaded");
+        }
+        else
+        {
+            Debug.Log("No saved file founded");
+        }
+    }
+
     private Save CreateSaveGameObject()
     {
+        // creating variables
         Save save = new Save();
 
         GridObject[] gridObjects = FindObjectsOfType<GridObject>();
         List<Transform> placeableTransform = new List<Transform>();
         List<GridTypes> placeableType = new List<GridTypes>();
+        List<int> saveObjectIndex = new List<int>();
 
         // filter out not relevant GridObject
         for (int i = 0; i < gridObjects.Length; i++)
@@ -267,6 +352,7 @@ public class GridBuilder : MonoBehaviour
             {
                 placeableTransform.Add(gridObjects[i].transform);
                 placeableType.Add(gridObjects[i].myType);
+                saveObjectIndex.Add(gridObjects[i].objectIndex);
             }
         }
 
@@ -281,14 +367,22 @@ public class GridBuilder : MonoBehaviour
             placeableRot[i] = placeableTransform[i].rotation;
         }
 
-        //assigning data
-
+        // assigning data
         save.allposition = placeablePos;
         save.allRotation = placeableRot;
         save.gridtype = placeableType.ToArray();
+        save.objectIndex = saveObjectIndex.ToArray();
+
+        // grid info
+        save.xGrid = (int)xSlider.value;
+        save.yGrid = (int)ySlider.value;
+        save.zGrid = int.Parse(zText.text);
+
+        save.gridRange = rangeSlider.value;
 
         return save;
     }
+    #endregion
 }
 
 /// <summary>

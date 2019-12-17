@@ -26,6 +26,7 @@ public class VR_GridPointer : MonoBehaviour
 
     private bool needRotate;
     readonly float axisLimit = 0.05f;
+    int Index;
 
     //Vector3 offset = new Vector3(0, 1, 0);
 
@@ -149,12 +150,14 @@ public class VR_GridPointer : MonoBehaviour
             //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
             spawnedObject.tag = "GridObject";
+            spawnedObject.GetComponent<GridObject>().objectIndex = Index;
 
         }
     }
 
-    public void UpdateSelection(GameObject selectedGo)
+    public void UpdateSelection(GameObject selectedGo, int arrayIndex)
     {
         selectedPrefab = selectedGo;
+        Index = arrayIndex;
     }
 }

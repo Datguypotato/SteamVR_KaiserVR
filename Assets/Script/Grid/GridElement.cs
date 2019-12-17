@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridElement : GridObject
+public class GridElement : Grid
 {
     //get assigned in VR_GridPointer
     public GameObject activeObject;

@@ -5,14 +5,24 @@ using UnityEngine;
 [System.Serializable]
 public class Save
 {
-    //public float[] vectorX;
+    /// <summary>
+    /// transform
+    /// </summary>
     public SerializableVector3[] allposition;
     public SerializableQuaternion[] allRotation;
+
+    /// <summary>
+    /// gridsetting
+    /// </summary>
+    public int xGrid;
+    public int yGrid;
+    public int zGrid;
+
+    public float gridRange;
+
+    /// <summary>
+    /// Object
+    /// </summary>
     public GridTypes[] gridtype;
-
-    //public int mesh;
-
-    //public Transform[] gridColumTransform;
-    //public Transform[] gridWallTransform;
-    //public Transform[] gridFloorTransform;
+    public int[] objectIndex;
 }

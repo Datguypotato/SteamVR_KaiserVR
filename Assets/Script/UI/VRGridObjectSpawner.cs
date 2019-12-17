@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class VRGridObjectSpawner : VRBaseObjectsSpawner
 {
+    public GridTypes tabType;
+
     VR_GridPointer gridpointer;
     GridContainerWindow containerWindow;
 
@@ -22,7 +24,7 @@ public class VRGridObjectSpawner : VRBaseObjectsSpawner
 
     public override void ButtonAction(int index)
     {
-        gridpointer.UpdateSelection(spawnableObjects[index].spawnObject);
+        gridpointer.UpdateSelection(spawnableObjects[index].spawnObject, index);
     }
 
     public override void SetUpButton(GameObject buttonGameObject, int index)

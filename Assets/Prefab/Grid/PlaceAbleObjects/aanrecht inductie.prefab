@@ -90,8 +90,8 @@ GameObject:
   - component: {fileID: 3953014247758667423}
   - component: {fileID: 1079280554683536691}
   - component: {fileID: 6757324245517068746}
-  - component: {fileID: 8361341461984089840}
   - component: {fileID: 3648711128421906830}
+  - component: {fileID: 3459256486937523931}
   m_Layer: 0
   m_Name: aanrecht inductie
   m_TagString: GridObject
@@ -166,19 +166,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &8361341461984089840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3953014247758299839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &3648711128421906830
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -192,6 +179,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5998441, y: 1.0388614, z: 0.6058054}
   m_Center: {x: -0.00000032782555, y: 0.5208147, z: 0.000000014901161}
+--- !u!114 &3459256486937523931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3953014247758299839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &8494387486593714928
 GameObject:
   m_ObjectHideFlags: 0

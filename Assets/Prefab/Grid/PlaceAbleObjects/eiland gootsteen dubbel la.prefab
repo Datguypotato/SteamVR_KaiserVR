@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3601224107769336488}
   - component: {fileID: 5521721564269455518}
   - component: {fileID: 2278137423650018407}
-  - component: {fileID: 4461015131642449589}
   - component: {fileID: 3191447900072239926}
+  - component: {fileID: 989858098594987799}
   m_Layer: 0
   m_Name: eiland gootsteen dubbel la
   m_TagString: GridObject
@@ -86,19 +86,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &4461015131642449589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549799683149324475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &3191447900072239926
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -112,6 +99,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9173999, y: 1.2656163, z: 0.6058055}
   m_Center: {x: -0.000000074505806, y: 0.632672, z: -0.00000008940697}
+--- !u!114 &989858098594987799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549799683149324475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &1601808384173660688
 GameObject:
   m_ObjectHideFlags: 0

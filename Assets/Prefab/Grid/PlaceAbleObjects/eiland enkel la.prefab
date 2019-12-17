@@ -171,8 +171,8 @@ GameObject:
   - component: {fileID: 8444480785929822617}
   - component: {fileID: 5553326438668954167}
   - component: {fileID: 2174651010217023182}
-  - component: {fileID: 5836395352712355200}
   - component: {fileID: 2756682205247781408}
+  - component: {fileID: 7435860579973053690}
   m_Layer: 0
   m_Name: eiland enkel la
   m_TagString: GridObject
@@ -246,19 +246,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5836395352712355200
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8444480785929665977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &2756682205247781408
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -272,6 +259,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8989122, y: 0.8084204, z: 0.600002}
   m_Center: {x: 0, y: 0.40461898, z: 0.00000020861626}
+--- !u!114 &7435860579973053690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8444480785929665977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &8444480785929665981
 GameObject:
   m_ObjectHideFlags: 0

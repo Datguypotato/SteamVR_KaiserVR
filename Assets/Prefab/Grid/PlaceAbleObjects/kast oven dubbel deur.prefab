@@ -171,8 +171,8 @@ GameObject:
   - component: {fileID: 7398678388400957959}
   - component: {fileID: 6813049837021241769}
   - component: {fileID: 986387074731269456}
-  - component: {fileID: 390239389994281580}
   - component: {fileID: 3465741184870213988}
+  - component: {fileID: -9128708225672105250}
   m_Layer: 0
   m_Name: kast oven dubbel deur
   m_TagString: GridObject
@@ -245,19 +245,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &390239389994281580
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7398678388400469543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &3465741184870213988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -271,3 +258,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6000994, y: 2.428532, z: 0.5999999}
   m_Center: {x: 0, y: 1.214418, z: -0.000000014901161}
+--- !u!114 &-9128708225672105250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7398678388400469543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3

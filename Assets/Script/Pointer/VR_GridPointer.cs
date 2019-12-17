@@ -32,7 +32,10 @@ public class VR_GridPointer : MonoBehaviour
     private void Awake()
     {
         pointer = GetComponent<UiPointer>();
-        gridManager = FindObjectOfType<GridBuilder>().transform;
+        if(FindObjectOfType<GridBuilder>() != null)
+        {
+            gridManager = FindObjectOfType<GridBuilder>().transform;
+        }
     }
 
     private void Update()
@@ -83,47 +86,6 @@ public class VR_GridPointer : MonoBehaviour
                 
 
         return false;
-    }
-
-    //i was overthinking this lol
-    //so this is completly useless
-    Vector3 GetGhostPos(Vector3 hitPoint, GameObject gridObject)
-    {
-        //todo
-        //create either 2 offset variables or a float offset
-        Transform gridTransform = gridObject.transform;
-
-        float deltaZ = hitPoint.z - gridTransform.position.z;
-        float deltaX = hitPoint.x - gridTransform.position.x;
-
-        if (deltaZ > deltaX)
-        {
-            if (deltaZ > axisLimit)
-            {
-                return gridTransform.position - new Vector3(0, 0, -0.5f);
-
-            }
-            else if (deltaZ < -axisLimit)
-            {
-                return gridTransform.position - new Vector3(0, 0, 0.5f);
-            }
-        }
-        else
-        {
-            if (deltaX > axisLimit)
-            {
-                return gridTransform.position - new Vector3(-0.5f, 0, 0);
-            }
-            else if (deltaX < -axisLimit)
-            {
-                return gridTransform.position - new Vector3(0.5f, 0, 0);
-            }
-        }
-
-
-            return gridTransform.position;
-
-
     }
 
     void SetGhost(GridElement gridObject, GameObject GhostObject)

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2862029307015294450}
   - component: {fileID: 2276088077656516188}
   - component: {fileID: 5524442741934398117}
-  - component: {fileID: 5862514014621167776}
   - component: {fileID: 705689977706810151}
+  - component: {fileID: -1404215325989685289}
   m_Layer: 0
   m_Name: eiland rand kruk dubbel la
   m_TagString: GridObject
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5862514014621167776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2862029307014869458}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &705689977706810151
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,6 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9174324, y: 0.99995905, z: 0.6124611}
   m_Center: {x: -0.00000016391277, y: 0.49997976, z: 0.00000014901161}
+--- !u!114 &-1404215325989685289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2862029307014869458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &7645003788483210057
 GameObject:
   m_ObjectHideFlags: 0

@@ -90,8 +90,8 @@ GameObject:
   - component: {fileID: 7636453379682467716}
   - component: {fileID: 5898470392390841386}
   - component: {fileID: 209165565591718099}
-  - component: {fileID: 7707927167713666801}
   - component: {fileID: 4421086143833382332}
+  - component: {fileID: -3556022043102938988}
   m_Layer: 0
   m_Name: aanrecht rand dubbel la
   m_TagString: GridObject
@@ -164,19 +164,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &7707927167713666801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7636453379682231204}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &4421086143833382332
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -190,6 +177,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5998515, y: 0.999959, z: 0.60460997}
   m_Center: {x: 0, y: 0.5013598, z: -0.000000044703484}
+--- !u!114 &-3556022043102938988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636453379682231204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &8355926700600001692
 GameObject:
   m_ObjectHideFlags: 0

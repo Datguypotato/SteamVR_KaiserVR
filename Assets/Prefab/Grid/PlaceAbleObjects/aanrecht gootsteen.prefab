@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1086420946069396070}
   - component: {fileID: 3977255068990837194}
   - component: {fileID: 7209846301341117747}
-  - component: {fileID: 3218302789555103041}
   - component: {fileID: 2225570145130379173}
+  - component: {fileID: -1642476624933280319}
   m_Layer: 0
   m_Name: aanrecht gootsteen
   m_TagString: GridObject
@@ -85,19 +85,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &3218302789555103041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1086420946069554758}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &2225570145130379173
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -111,6 +98,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5998441, y: 1.2653577, z: 0.6058054}
   m_Center: {x: -0.00000032782555, y: 0.63406277, z: 0.000000014901161}
+--- !u!114 &-1642476624933280319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086420946069554758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &3447864950291218964
 GameObject:
   m_ObjectHideFlags: 0

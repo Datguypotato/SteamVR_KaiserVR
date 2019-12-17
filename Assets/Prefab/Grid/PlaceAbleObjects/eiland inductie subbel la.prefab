@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3654690020979015177}
   - component: {fileID: 5756470634046637119}
   - component: {fileID: 2080556244935555270}
-  - component: {fileID: 6655020979410459847}
   - component: {fileID: 3617707240036600984}
+  - component: {fileID: -3029448846263520635}
   m_Layer: 0
   m_Name: eiland inductie subbel la
   m_TagString: GridObject
@@ -89,19 +89,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &6655020979410459847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 352205379130133530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &3617707240036600984
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -115,6 +102,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.9174009, y: 1.0388614, z: 0.6058055}
   m_Center: {x: -0.00000011920929, y: 0.51944584, z: 0.00000008940697}
+--- !u!114 &-3029448846263520635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 352205379130133530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &2575282068958204934
 GameObject:
   m_ObjectHideFlags: 0

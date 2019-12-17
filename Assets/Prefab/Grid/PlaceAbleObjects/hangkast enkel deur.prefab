@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 599559045279062707}
   - component: {fileID: 3491342734062227743}
   - component: {fileID: 7155996455367372262}
-  - component: {fileID: 5347696225990210866}
   - component: {fileID: 2638012223578367523}
+  - component: {fileID: 8027566346489545971}
   m_Layer: 0
   m_Name: hangkast enkel deur
   m_TagString: GridObject
@@ -81,19 +81,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &5347696225990210866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 599559045279155859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &2638012223578367523
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -107,6 +94,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.6001918, y: 0.63000023, z: 0.59983206}
   m_Center: {x: 0.000000029802322, y: 2.112772, z: 0}
+--- !u!114 &8027566346489545971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599559045279155859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3
 --- !u!1 &599559045279155863
 GameObject:
   m_ObjectHideFlags: 0

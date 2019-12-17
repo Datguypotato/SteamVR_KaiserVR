@@ -169,8 +169,8 @@ GameObject:
   - component: {fileID: 4848359160230935725}
   - component: {fileID: 8892751666647136003}
   - component: {fileID: 2906492936437369850}
-  - component: {fileID: 6002947114160547280}
   - component: {fileID: 8216513140362517048}
+  - component: {fileID: -3263330765100290875}
   m_Layer: 0
   m_Name: aanrecht rand enkel la
   m_TagString: GridObject
@@ -242,19 +242,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &6002947114160547280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4848359160231026829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbcfc0d36efd98b48ae350faa052d37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myType: 3
 --- !u!65 &8216513140362517048
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -268,3 +255,16 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5998887, y: 0.8084204, z: 0.6000025}
   m_Center: {x: -0.00005620718, y: 0.4055215, z: -0.00000016391277}
+--- !u!114 &-3263330765100290875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4848359160231026829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1017c5e4eadd5a647943d89a89b95850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myType: 3

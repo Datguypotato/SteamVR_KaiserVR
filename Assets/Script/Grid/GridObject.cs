@@ -6,6 +6,8 @@ public class GridObject : MonoBehaviour
 {
     public GridTypes myType;
 }
+
+[System.Serializable]
 public enum GridTypes
 {
     wall,

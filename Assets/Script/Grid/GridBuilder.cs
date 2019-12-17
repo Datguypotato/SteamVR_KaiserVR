@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Runtime.Serialization.Formatters.Binary;
 using Valve.VR;
 using UnityEngine.UI;
 using UnityEngine;
+using System;
 
 public class GridBuilder : MonoBehaviour
 {
@@ -236,4 +240,192 @@ public class GridBuilder : MonoBehaviour
         CreateGrid((int)xSlider.value, int.Parse(zText.text), (int)ySlider.value, rangeSliderDivided);
     }
 
+    public void SaveBuild()
+    {
+        Save save = CreateSaveGameObject();
+
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Create(Application.persistentDataPath + "/BuildingSave.Kaiser");
+        bf.Serialize(file, save);
+        file.Close();
+
+        Debug.Log("Saved file");
+    }
+
+    private Save CreateSaveGameObject()
+    {
+        Save save = new Save();
+
+        GridObject[] gridObjects = FindObjectsOfType<GridObject>();
+        List<Transform> placeableTransform = new List<Transform>();
+        List<GridTypes> placeableType = new List<GridTypes>();
+
+        // filter out not relevant GridObject
+        for (int i = 0; i < gridObjects.Length; i++)
+        {
+            if(gridObjects[i].myType != GridTypes.objectsnap)
+            {
+                placeableTransform.Add(gridObjects[i].transform);
+                placeableType.Add(gridObjects[i].myType);
+            }
+        }
+
+        // Creating seriazable variables
+        SerializableVector3[] placeablePos = new SerializableVector3[placeableTransform.Count];
+        SerializableQuaternion[] placeableRot = new SerializableQuaternion[placeableTransform.Count];
+
+        // splitting data
+        for (int i = 0; i < placeableTransform.Count; i++)
+        {
+            placeablePos[i] = placeableTransform[i].position;
+            placeableRot[i] = placeableTransform[i].rotation;
+        }
+
+        //assigning data
+
+        save.allposition = placeablePos;
+        save.allRotation = placeableRot;
+        save.gridtype = placeableType.ToArray();
+
+        return save;
+    }
+}
+
+/// <summary>
+/// Since unity doesn't flag the Vector3 as serializable, we
+/// need to create our own version. This one will automatically convert
+/// between Vector3 and SerializableVector3
+/// </summary>
+[System.Serializable]
+public struct SerializableVector3
+{
+    /// <summary>
+    /// x component
+    /// </summary>
+    public float x;
+
+    /// <summary>
+    /// y component
+    /// </summary>
+    public float y;
+
+    /// <summary>
+    /// z component
+    /// </summary>
+    public float z;
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="rX"></param>
+    /// <param name="rY"></param>
+    /// <param name="rZ"></param>
+    public SerializableVector3(float rX, float rY, float rZ)
+    {
+        x = rX;
+        y = rY;
+        z = rZ;
+    }
+
+    /// <summary>
+    /// Returns a string representation of the object
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return String.Format("[{0}, {1}, {2}]", x, y, z);
+    }
+
+    /// <summary>
+    /// Automatic conversion from SerializableVector3 to Vector3
+    /// </summary>
+    /// <param name="rValue"></param>
+    /// <returns></returns>
+    public static implicit operator Vector3(SerializableVector3 rValue)
+    {
+        return new Vector3(rValue.x, rValue.y, rValue.z);
+    }
+
+    /// <summary>
+    /// Automatic conversion from Vector3 to SerializableVector3
+    /// </summary>
+    /// <param name="rValue"></param>
+    /// <returns></returns>
+    public static implicit operator SerializableVector3(Vector3 rValue)
+    {
+        return new SerializableVector3(rValue.x, rValue.y, rValue.z);
+    }
+}
+
+/// <summary>
+/// Since unity doesn't flag the Quaternion as serializable, we
+/// need to create our own version. This one will automatically convert
+/// between Quaternion and SerializableQuaternion
+/// </summary>
+[System.Serializable]
+public struct SerializableQuaternion
+{
+    /// <summary>
+    /// x component
+    /// </summary>
+    public float x;
+
+    /// <summary>
+    /// y component
+    /// </summary>
+    public float y;
+
+    /// <summary>
+    /// z component
+    /// </summary>
+    public float z;
+
+    /// <summary>
+    /// w component
+    /// </summary>
+    public float w;
+
+    /// <summary>
+    /// Constructor
+    /// </summary>
+    /// <param name="rX"></param>
+    /// <param name="rY"></param>
+    /// <param name="rZ"></param>
+    /// <param name="rW"></param>
+    public SerializableQuaternion(float rX, float rY, float rZ, float rW)
+    {
+        x = rX;
+        y = rY;
+        z = rZ;
+        w = rW;
+    }
+
+    /// <summary>
+    /// Returns a string representation of the object
+    /// </summary>
+    /// <returns></returns>
+    public override string ToString()
+    {
+        return String.Format("[{0}, {1}, {2}, {3}]", x, y, z, w);
+    }
+
+    /// <summary>
+    /// Automatic conversion from SerializableQuaternion to Quaternion
+    /// </summary>
+    /// <param name="rValue"></param>
+    /// <returns></returns>
+    public static implicit operator Quaternion(SerializableQuaternion rValue)
+    {
+        return new Quaternion(rValue.x, rValue.y, rValue.z, rValue.w);
+    }
+
+    /// <summary>
+    /// Automatic conversion from Quaternion to SerializableQuaternion
+    /// </summary>
+    /// <param name="rValue"></param>
+    /// <returns></returns>
+    public static implicit operator SerializableQuaternion(Quaternion rValue)
+    {
+        return new SerializableQuaternion(rValue.x, rValue.y, rValue.z, rValue.w);
+    }
 }

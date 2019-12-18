@@ -44,15 +44,19 @@ public class GridBuilder : MonoBehaviour
 
 
     public VRGridObjectSpawner[] gridObjectSpawners;
-    Transform[] pointsholder;
+    public Transform[] pointsholder;
+
+    public List<Transform> columHolder;
+    public List<Transform> wallHolder;
+    public List<Transform> floorHolder;
 
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
         panel = FindObjectOfType<UIpanel>();
 
-        pointsholder = new Transform[transform.childCount];
         isActive = new bool[transform.childCount];
+        pointsholder = new Transform[transform.childCount];
 
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -247,6 +251,8 @@ public class GridBuilder : MonoBehaviour
         bf.Serialize(file, save);
         file.Close();
 
+        // todo
+        // show something to the user that the save happend
         Debug.Log("Saved file");
     }
 
@@ -254,18 +260,35 @@ public class GridBuilder : MonoBehaviour
     {
         if(File.Exists(Application.persistentDataPath + "/BuildingSave.Kaiser"))
         {
-
+            
             // Getting save
+
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(Application.persistentDataPath + "/BuildingSave.Kaiser", FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
             file.Close();
 
-            // getting available objects
-            //VRGridObjectSpawner[] gridObjectSpawners = FindObjectsOfType<VRGridObjectSpawner>();
+            // setting gridsetting
+            xSlider.value = save.xGrid;
+            ySlider.value = save.yGrid;
+            zText.text = save.zGrid.ToString();
 
-            //save.allposition.Length should not be the lenght need gridobject lenght
-            //todo make it spawn the right object these array are empty for some reason
+            rangeSlider.value = save.gridRange;
+
+            // setting grid acording to the settings
+
+            UpdateGrid();
+
+            //restting objects
+
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).GetComponent<GridObject>() != null)
+                    Destroy(transform.GetChild(i).gameObject);
+            }
+
+            // getting available objects
+
             GameObject[] columColl = new GameObject[gridObjectSpawners[0].spawnableprefabs.Length];
             GameObject[] wallColl = new GameObject[gridObjectSpawners[1].spawnableprefabs.Length];
             GameObject[] floorColl = new GameObject[gridObjectSpawners[2].spawnableprefabs.Length];
@@ -281,53 +304,97 @@ public class GridBuilder : MonoBehaviour
                         floorColl = gridObjectSpawners[i].spawnableprefabs;
                         break;
                     case (GridTypes.wall):
-                        Debug.Log(gridObjectSpawners[i].spawnableprefabs[i].name);
                         wallColl = gridObjectSpawners[i].spawnableprefabs;
                         break;
                 }
             }
 
+            // getting all transfor of the pointHolders
+            //
+            columHolder = GetChildren(pointsholder[0]);
+            floorHolder = GetChildren(pointsholder[1]);
+            wallHolder = GetChildren(pointsholder[2]);
+
+
             // creating objects from save
 
             for (int i = 0; i < save.allposition.Length; i++)
             {
-                GameObject go = new GameObject();
+                //decide what Object need to spawn
+
                 switch (save.gridtype[i])
                 {
                     case (GridTypes.Colum):
-                        Instantiate(columColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
+                        SpawnSaveObject(columColl[save.objectIndex[i]], GridTypes.Colum, save, i);
                         break;
                     case (GridTypes.Floor):
-                        Instantiate(floorColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
+                        SpawnSaveObject(floorColl[save.objectIndex[i]], GridTypes.Floor, save, i);
                         break;
                     case (GridTypes.wall):
-                        Debug.Log(save.objectIndex[i]);
-                        Debug.Log(wallColl[save.objectIndex[i]]);
-                        Debug.Log(save.allposition[i]);
-                        Debug.Log(save.allRotation[i]);
-                        Instantiate(wallColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
+                        SpawnSaveObject(wallColl[save.objectIndex[i]], GridTypes.wall, save, i);
+                        break;
+                    default:
+                        Debug.Log("Something is really fucked");
                         break;
 
                 }
-                
+
             }
-
-            // setting gridsetting
-            xSlider.value = save.xGrid;
-            ySlider.value = save.yGrid;
-            zText.text = save.zGrid.ToString();
-
-            rangeSlider.value = save.gridRange;
-
-            // setting grid acording to the settings
-            UpdateGrid();
-
             Debug.Log("Save loaded");
         }
         else
         {
             Debug.Log("No saved file founded");
         }
+    }
+
+    void SpawnSaveObject(GameObject go, GridTypes type, Save save, int loopIndex)
+    {
+        GameObject savedGo = Instantiate(go, save.allposition[loopIndex], save.allRotation[loopIndex], transform);
+
+        switch (type)
+        {
+            case GridTypes.Colum:
+                SetComponents(columHolder[save.childTransformIndex[loopIndex]].GetComponent<GridElement>(), savedGo,
+                    save.objectIndex[loopIndex], save.childTransformIndex[loopIndex]);
+                break;
+            case GridTypes.Floor:
+                SetComponents(wallHolder[save.childTransformIndex[loopIndex]].GetComponent<GridElement>(),
+                    savedGo, save.objectIndex[loopIndex], save.childTransformIndex[loopIndex]);
+                break;
+            case GridTypes.wall:
+                SetComponents(floorHolder[save.childTransformIndex[loopIndex]].GetComponent<GridElement>(),
+                    savedGo, save.objectIndex[loopIndex], save.childTransformIndex[loopIndex]);
+                break;
+            default:
+                Debug.Log("Something went wrong");
+                break;
+        }
+    }
+
+    void SetComponents(GridElement element, GameObject g, int objInt, int childInt)
+    {
+        element.activeObject = g;
+
+        GridObject gridobject = g.GetComponent<GridObject>();
+        gridobject.objectIndex = objInt;
+        gridobject.childIndex = childInt;
+    }
+
+    // I am not sure why yet but the first half of the list is miss transform
+    // My fix is simply remvoe the first half 
+    // I think it has the do with the fact that i destroy all children
+    List<Transform> GetChildren(Transform t)
+    {
+        List<Transform> returnTrans = new List<Transform>();
+        for (int i = 0; i < t.childCount; i++)
+        {
+            returnTrans.Add(t.GetChild(i));
+        }
+
+        returnTrans.RemoveRange(0, returnTrans.Count / 2);
+
+        return returnTrans;
     }
 
     private Save CreateSaveGameObject()
@@ -339,6 +406,7 @@ public class GridBuilder : MonoBehaviour
         List<Transform> placeableTransform = new List<Transform>();
         List<GridTypes> placeableType = new List<GridTypes>();
         List<int> saveObjectIndex = new List<int>();
+        List<int> saveTransformIndex = new List<int>();
 
         // filter out not relevant GridObject
         for (int i = 0; i < gridObjects.Length; i++)
@@ -348,6 +416,7 @@ public class GridBuilder : MonoBehaviour
                 placeableTransform.Add(gridObjects[i].transform);
                 placeableType.Add(gridObjects[i].myType);
                 saveObjectIndex.Add(gridObjects[i].objectIndex);
+                saveTransformIndex.Add(gridObjects[i].childIndex);
             }
         }
 
@@ -367,8 +436,9 @@ public class GridBuilder : MonoBehaviour
         save.allRotation = placeableRot;
         save.gridtype = placeableType.ToArray();
         save.objectIndex = saveObjectIndex.ToArray();
+        save.childTransformIndex = saveTransformIndex.ToArray();
 
-        // grid info
+        // assigning grid info
         save.xGrid = (int)xSlider.value;
         save.yGrid = (int)ySlider.value;
         save.zGrid = int.Parse(zText.text);

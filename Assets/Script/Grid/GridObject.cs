@@ -5,6 +5,5 @@ using UnityEngine;
 public class GridObject : Grid
 {
     public int objectIndex;
+    public int childIndex;
 }
-
-

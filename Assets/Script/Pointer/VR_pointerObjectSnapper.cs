@@ -63,7 +63,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
     {
         if (pointer.highlightedObject != null)
             if (pointer.highlightedObject.tag == "GridObject")
-                if (pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.Floor)
+                if (pointer.highlightedObject.GetComponent<GridObjectPlaceAble>().myType == GridTypes.Floor)
                     return true;
 
 

@@ -25,4 +25,5 @@ public class Save
     /// </summary>
     public GridTypes[] gridtype;
     public int[] objectIndex;
+    public int[] childTransformIndex;
 }

@@ -128,14 +128,14 @@ public class VR_GridPointer : MonoBehaviour
         //}
     }
 
-    void PlaceObject(GameObject placeable, Transform t)
+    void PlaceObject(GameObject placeable, Transform elementTransform)
     {
         if(placeable != null)
         {
-            GameObject spawnedObject = Instantiate(placeable, t.position, Quaternion.Euler(spawnRotation), gridManager);
+            GameObject spawnedObject = Instantiate(placeable, elementTransform.position, Quaternion.Euler(spawnRotation), gridManager);
 
             //spawn the particle
-            Instantiate(dustParticle, t.position, Quaternion.identity);
+            Instantiate(dustParticle, elementTransform.position, Quaternion.identity);
 
             //play sound
             spawnedObject.GetComponent<AudioSource>().Play();
@@ -146,11 +146,12 @@ public class VR_GridPointer : MonoBehaviour
                 spawnedObject.transform.rotation = Quaternion.identity;
             }
 
-            t.GetComponent<GridElement>().activeObject = spawnedObject;
+            elementTransform.GetComponent<GridElement>().activeObject = spawnedObject;
             //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
             spawnedObject.tag = "GridObject";
             spawnedObject.GetComponent<GridObject>().objectIndex = Index;
+            spawnedObject.GetComponent<GridObject>().childIndex = elementTransform.GetSiblingIndex();
 
         }
     }

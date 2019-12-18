@@ -5754,6 +5754,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
         type: 3}
+      propertyPath: floorColl.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
+      propertyPath: columColl.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
+      propertyPath: wallColl.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
+      propertyPath: gridObjectSpawners.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
       propertyPath: containerWindow
       value: 
       objectReference: {fileID: 1120392222}
@@ -5788,6 +5808,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6727333888075077138, guid: 1ba6079adaec74446b889a8d26e807a8,
         type: 3}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
+      propertyPath: gridObjectSpawners.Array.data[0]
+      value: 
+      objectReference: {fileID: 421537924}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
+      propertyPath: gridObjectSpawners.Array.data[1]
+      value: 
+      objectReference: {fileID: 1972449657}
+    - target: {fileID: 2563744892909211235, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
+        type: 3}
+      propertyPath: gridObjectSpawners.Array.data[2]
+      value: 
+      objectReference: {fileID: 822288868}
     - target: {fileID: 2563744892909211244, guid: 84c58cd7d2c1b9044acd626c9fc9a330,
         type: 3}
       propertyPath: m_LocalPosition.x

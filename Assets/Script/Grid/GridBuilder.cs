@@ -17,10 +17,6 @@ public class GridBuilder : MonoBehaviour
     public GameObject columPoint;
     public GameObject wallPoint;
     public GameObject floorPoints;
-
-    //[Header("Grid size")]
-    //public int xStartSize;
-    //public int zStartSize;
     
     public float startRange = 1;
 
@@ -36,18 +32,20 @@ public class GridBuilder : MonoBehaviour
     [Tooltip("Enable this if you want to hide the grid on Teleport")]
     public bool disableOnTeleport;
     public SteamVR_Action_Boolean teleportButton;
-
-    Transform[] pointsholder;
-
-    bool[] isActive;
+    
     int lastTabIndex;
     int activeMenu;
+    bool[] isActive;
 
     [HideInInspector]
     //this get assigned in the VRGridObjectSpawner
     public VRGridObjectSpawner objectSpawner;
-
     UIpanel panel;
+
+
+    public VRGridObjectSpawner[] gridObjectSpawners;
+    Transform[] pointsholder;
+
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
@@ -60,7 +58,8 @@ public class GridBuilder : MonoBehaviour
         {
             pointsholder[i] = transform.GetChild(i);
         }
-        //CreateGrid(xStartSize, 0, zStartSize, startRange);
+
+        //gridObjectSpawners = FindObjectsOfType<VRGridObjectSpawner>();
     }
 
     private void OnEnable()
@@ -178,6 +177,7 @@ public class GridBuilder : MonoBehaviour
         {
             for (int y = 0; y < zSize; y++)
             {
+                
                 for (int z = 0; z < ySize; z++)
                 {
                     float xRanged = x * range;
@@ -188,34 +188,29 @@ public class GridBuilder : MonoBehaviour
                     Vector3 yOffset = new Vector3(xRanged, 0, yRanged - offset);
                     Vector3 zOffset = new Vector3(0, zRanged, 0);
 
-                    Vector3 firstLayerX = new Vector3(xRanged - offset, 0, 0);
                     Vector3 firstLayerY = new Vector3(0, 0, yRanged - offset);
+                    Vector3 firstLayerX = new Vector3(xRanged - offset, 0, 0);
 
 
                     //pillar point
                     GameObject crosses = Instantiate(columPoint, transform.position + new Vector3(xRanged, 0, yRanged) + zOffset, transform.rotation, pointsholder[0]);
 
                     crosses.name = "Grid X: " + x + " Y: " + y;
-
                     //mid point
+                    if(x != 0)
+                        Instantiate(wallPoint, transform.position + xOffset + zOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y + " 1";
+                    if(y != 0)
+                        Instantiate(wallPoint, transform.position + yOffset + zOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y + " 2 ";
                     if (x > 0 && y > 0)
                     {
-
-                        Instantiate(wallPoint, transform.position + xOffset + zOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-                        Instantiate(wallPoint, transform.position + yOffset + zOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-
-                        Instantiate(wallPoint, transform.position + firstLayerX + zOffset, transform.rotation, pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-                        Instantiate(wallPoint, transform.position + firstLayerY + zOffset, Quaternion.Euler(0, 90, 0), pointsholder[1]).name = "Midpoint: X " + x + " Y: " + y;
-
-                        //Floor point
-
                         Vector3 FloorPos = new Vector3(xRanged - offset, 0, yRanged - offset);
                         Instantiate(floorPoints, transform.position + FloorPos + zOffset, Quaternion.identity, pointsholder[2]);
                     }
-
+                    
                     //create more grid points if needed
 
                 }
+                
             }
         }
     }
@@ -267,13 +262,13 @@ public class GridBuilder : MonoBehaviour
             file.Close();
 
             // getting available objects
-            VRGridObjectSpawner[] gridObjectSpawners = FindObjectsOfType<VRGridObjectSpawner>();
+            //VRGridObjectSpawner[] gridObjectSpawners = FindObjectsOfType<VRGridObjectSpawner>();
 
             //save.allposition.Length should not be the lenght need gridobject lenght
             //todo make it spawn the right object these array are empty for some reason
-            GameObject[] columColl = new GameObject[save.allposition.Length];
-            GameObject[] wallColl = new GameObject[save.allposition.Length];
-            GameObject[] floorColl = new GameObject[save.allposition.Length];
+            GameObject[] columColl = new GameObject[gridObjectSpawners[0].spawnableprefabs.Length];
+            GameObject[] wallColl = new GameObject[gridObjectSpawners[1].spawnableprefabs.Length];
+            GameObject[] floorColl = new GameObject[gridObjectSpawners[2].spawnableprefabs.Length];
 
             for (int i = 0; i < gridObjectSpawners.Length; i++)
             {
@@ -306,7 +301,7 @@ public class GridBuilder : MonoBehaviour
                         Instantiate(floorColl[save.objectIndex[i]], save.allposition[i], save.allRotation[i]);
                         break;
                     case (GridTypes.wall):
-                        Debug.Log(save.objectIndex[i])
+                        Debug.Log(save.objectIndex[i]);
                         Debug.Log(wallColl[save.objectIndex[i]]);
                         Debug.Log(save.allposition[i]);
                         Debug.Log(save.allRotation[i]);

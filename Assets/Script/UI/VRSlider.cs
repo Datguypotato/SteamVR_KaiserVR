@@ -6,6 +6,7 @@ using UnityEngine;
 public class VRSlider : MonoBehaviour
 {
     public Text sliderText;
+    public bool hasUnit;
     Slider slider;
 
     private void Awake()
@@ -17,14 +18,15 @@ public class VRSlider : MonoBehaviour
 
     public void OnSliderChange()
     {
-        if (slider.wholeNumbers)
+        float newValue = slider.value;
+        if (hasUnit)
         {
-            sliderText.text = slider.value.ToString();
+            newValue = newValue / 10;
+            sliderText.text = newValue.ToString("0.0") + "M";
         }
         else
         {
-            float newValue = slider.value / 10f;
-            sliderText.text = newValue.ToString("0.0") + "M";
+            sliderText.text = newValue.ToString();
         }
     }
 }

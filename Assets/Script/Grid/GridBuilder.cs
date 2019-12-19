@@ -31,8 +31,8 @@ public class GridBuilder : MonoBehaviour
     public bool disableOnTeleport;
     public SteamVR_Action_Boolean teleportButton;
     
-    private int lastTabIndex;
-    private int activeMenu;
+    public int lastTabIndex;
+    public int activeMenu;
     private bool[] isActive;
 
     [HideInInspector]
@@ -66,7 +66,6 @@ public class GridBuilder : MonoBehaviour
     private void OnEnable()
     {
         containerWindow.Open += ShowPoint;
-        containerWindow.Close += HideGridWrapper;
 
         panelMover.ClosePanel += HideGrid;
         panelMover.OpenPanel += LastShowGrid;
@@ -75,15 +74,9 @@ public class GridBuilder : MonoBehaviour
 
     }
 
-    private void Panel_OntabSwitch(int index)
-    {
-        activeMenu = index;
-    }
-
     private void OnDisable()
     {
         containerWindow.Open -= ShowPoint;
-        containerWindow.Close -= HideGridWrapper;
 
         panelMover.ClosePanel -= HideGrid;
         panelMover.OpenPanel -= LastShowGrid;
@@ -123,7 +116,34 @@ public class GridBuilder : MonoBehaviour
             }
         }
     }
-   
+
+    private void Panel_OntabSwitch(int index)
+    {
+        activeMenu = index;
+        if (index == 2 || index == 3 || index == 4 || index == 5)
+        {
+            for (int i = 0; i < pointsholder.Length; i++)
+            {
+                pointsholder[i].gameObject.SetActive(false);
+            }
+            pointsholder[lastTabIndex].gameObject.SetActive(true);
+
+            //set default object
+            if (objectSpawner != null)
+            {
+                objectSpawner.ButtonAction(0);
+            }
+        }
+        else
+        {
+            HideGrid();
+        }
+    }
+
+    void LastShowGrid()
+    {
+        Panel_OntabSwitch(activeMenu);
+    }
 
     void ShowPoint(int index)
     {
@@ -138,24 +158,6 @@ public class GridBuilder : MonoBehaviour
         if(objectSpawner != null)
         {
             objectSpawner.ButtonAction(0);
-        }
-    }
-
-    void LastShowGrid()
-    {
-        if (activeMenu == 2 || activeMenu == 3)
-        {
-            for (int i = 0; i < pointsholder.Length; i++)
-            {
-                pointsholder[i].gameObject.SetActive(false);
-            }
-            pointsholder[lastTabIndex].gameObject.SetActive(true);
-
-            //set default object
-            if (objectSpawner != null)
-            {
-                objectSpawner.ButtonAction(0);
-            }
         }
     }
 
@@ -250,7 +252,7 @@ public class GridBuilder : MonoBehaviour
         Save save = CreateSaveGameObject();
 
         // creating file
-        //Debug.Log(Application.dataPath + "/Saves" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + ".Kaiser");
+        Debug.Log(Application.dataPath + "/Saves" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + ".Kaiser");
         BinaryFormatter bf = new BinaryFormatter();
         if(!Directory.Exists(Application.dataPath + "/Saves"))
         {

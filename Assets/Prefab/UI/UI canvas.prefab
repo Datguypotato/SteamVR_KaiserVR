@@ -487,6 +487,7 @@ MonoBehaviour:
   spawnableprefabs: []
   spawnableObjects: []
   showName: 1
+  tabType: 0
 --- !u!1 &3700288422833269205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1088,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1037877637156131414}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1177,7 +1178,7 @@ RectTransform:
   - {fileID: 4180345188771208753}
   - {fileID: 159520587204944892}
   m_Father: {fileID: 1037877637156131414}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1373,9 +1374,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4696026030564585909}
-  - {fileID: 7904006645404941612}
   - {fileID: 8983165974398411185}
+  - {fileID: 7904006645404941612}
+  - {fileID: 4696026030564585909}
   m_Father: {fileID: 6831185806338943600}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

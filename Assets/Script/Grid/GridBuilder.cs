@@ -17,8 +17,6 @@ public class GridBuilder : MonoBehaviour
     public GameObject columPoint;
     public GameObject wallPoint;
     public GameObject floorPoints;
-    
-    public float startRange = 1;
 
     [Header("Slider")]
     public Slider xSlider;
@@ -33,22 +31,21 @@ public class GridBuilder : MonoBehaviour
     public bool disableOnTeleport;
     public SteamVR_Action_Boolean teleportButton;
     
-    int lastTabIndex;
-    int activeMenu;
-    bool[] isActive;
+    private int lastTabIndex;
+    private int activeMenu;
+    private bool[] isActive;
 
     [HideInInspector]
     //this get assigned in the VRGridObjectSpawner
     public VRGridObjectSpawner objectSpawner;
     UIpanel panel;
 
-
     public VRGridObjectSpawner[] gridObjectSpawners;
-    public Transform[] pointsholder;
+    private Transform[] pointsholder;
 
-    public List<Transform> columHolder;
-    public List<Transform> wallHolder;
-    public List<Transform> floorHolder;
+    private List<Transform> columHolder;
+    private List<Transform> wallHolder;
+    private List<Transform> floorHolder;
 
     private void Awake()
     {
@@ -90,6 +87,8 @@ public class GridBuilder : MonoBehaviour
 
         panelMover.ClosePanel -= HideGrid;
         panelMover.OpenPanel -= LastShowGrid;
+
+        panel.OntabSwitch -= Panel_OntabSwitch;
     }
     
     private void Start()
@@ -144,7 +143,7 @@ public class GridBuilder : MonoBehaviour
 
     void LastShowGrid()
     {
-        if (activeMenu == 2)
+        if (activeMenu == 2 || activeMenu == 3)
         {
             for (int i = 0; i < pointsholder.Length; i++)
             {
@@ -242,29 +241,47 @@ public class GridBuilder : MonoBehaviour
 
     public void SaveBuild()
     {
+        //the only active gameobject with a GridContainerWindow script will be the save tab
+        //So I don't have to check if I have the right one
+        GridContainerWindow settingWindow = FindObjectOfType<GridContainerWindow>();
+        settingWindow.gameObject.SetActive(false);
+
         // serialize
         Save save = CreateSaveGameObject();
 
         // creating file
+        //Debug.Log(Application.dataPath + "/Saves" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + ".Kaiser");
         BinaryFormatter bf = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/BuildingSave.Kaiser");
+        if(!Directory.Exists(Application.dataPath + "/Saves"))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Saves");
+        }
+
+
+        FileStream file = File.Create(Application.dataPath + "/Saves/" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + ".Kaiser");
         bf.Serialize(file, save);
         file.Close();
 
         // todo
         // show something to the user that the save happend
         Debug.Log("Saved file");
+        settingWindow.gameObject.SetActive(true);
     }
 
-    public void LoadBuild()
+    public void LoadBuild(string filePath)
     {
-        if(File.Exists(Application.persistentDataPath + "/BuildingSave.Kaiser"))
+        //the only active gameobject with a GridContainerWindow script will be the save tab
+        //So I don't have to check if I have the right one
+        GridContainerWindow settingWindow = FindObjectOfType<GridContainerWindow>();
+        settingWindow.gameObject.SetActive(false);
+
+        if (File.Exists(filePath))
         {
             
             // Getting save
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/BuildingSave.Kaiser", FileMode.Open);
+            FileStream file = File.Open(filePath, FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
             file.Close();
 
@@ -346,6 +363,7 @@ public class GridBuilder : MonoBehaviour
         {
             Debug.Log("No saved file founded");
         }
+        settingWindow.gameObject.SetActive(true);
     }
 
     void SpawnSaveObject(GameObject go, GridTypes type, Save save, int loopIndex)
@@ -383,7 +401,7 @@ public class GridBuilder : MonoBehaviour
 
     // I am not sure why yet but the first half of the list is miss transform
     // My fix is simply remvoe the first half 
-    // I think it has the do with the fact that i destroy all children
+    // I think it has the do with the fact that I destroy all children
     List<Transform> GetChildren(Transform t)
     {
         List<Transform> returnTrans = new List<Transform>();

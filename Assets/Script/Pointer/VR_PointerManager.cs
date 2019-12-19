@@ -40,5 +40,10 @@ public class VR_PointerManager : MonoBehaviour
             gridpointer.enabled = true;
             pointerObjectSnapper.enabled = false;
         }
+        else
+        {
+            gridpointer.enabled = false;
+            pointerObjectSnapper.enabled = false;
+        }
     }
 }

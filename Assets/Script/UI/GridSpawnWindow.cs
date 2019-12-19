@@ -21,6 +21,9 @@ public class GridSpawnWindow : ViewportContent
     private GridButtonBehaviour buttonBehaviourScript;
     private int numberOfButtons;
 
+    List<GameObject> spawnedPages = new List<GameObject>();
+    List<GameObject> Buttons = new List<GameObject>();
+
     public override void SetupContent(UIpanel controller, GameObject viewPort)
     {
         buttonBehaviourScript = GetComponent<GridButtonBehaviour>();
@@ -72,6 +75,7 @@ public class GridSpawnWindow : ViewportContent
         for (int i = 0; buttonCount < numberOfButtons; i++)
         {
             GameObject page = new GameObject("GridPage: " + i, typeof(RectTransform));
+            spawnedPages.Add(page);
             RectTransform pageTransForm = page.GetComponent<RectTransform>();
 
             pageTransForm.SetParent(gameObject.transform);
@@ -89,6 +93,7 @@ public class GridSpawnWindow : ViewportContent
                 for (int x = 0; x < width; x++)
                 {
                     GameObject button = Instantiate(gridButton, page.transform);
+                    Buttons.Add(button);
                     RectTransform buttonPosition = button.GetComponent<RectTransform>();
 
                     buttonBehaviourScript.SetUpButton(button, buttonCount);
@@ -110,4 +115,26 @@ public class GridSpawnWindow : ViewportContent
             }
         }
     }
+
+    //no longer needed 
+    //public void ResetButtonGrid()
+    //{
+    //    // destroy old buttons and pages
+
+    //    for (int i = 0; i < spawnedPages.Count; i++)
+    //    {
+    //        Destroy(spawnedPages[i]);
+    //    }
+
+    //    for (int i = 0; i < Buttons.Count; i++)
+    //    {
+    //        Destroy(Buttons[i]);
+    //    }
+
+    //    // clear list
+
+    //    spawnedPages.Clear();
+    //    Buttons.Clear();
+
+    //}
 }

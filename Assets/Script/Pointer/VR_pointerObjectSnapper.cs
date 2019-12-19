@@ -39,8 +39,9 @@ public class VR_pointerObjectSnapper : MonoBehaviour
             PlaceObject(pointer.hit.point, Quaternion.identity);
 
         }
-        else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObject>() != null)
+        else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObjectPlaceAble>() != null)
         {
+            Debug.Log("0");
             //if(pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.objectsnap)
                 SideSnap();
 
@@ -62,8 +63,7 @@ public class VR_pointerObjectSnapper : MonoBehaviour
     bool IsGround()
     {
         if (pointer.highlightedObject != null)
-            if (pointer.highlightedObject.tag == "GridObject")
-                if (pointer.highlightedObject.GetComponent<GridObjectPlaceAble>().myType == GridTypes.Floor)
+                if (pointer.highlightedObject.GetComponent<GridObject>() != null)
                     return true;
 
 
@@ -72,7 +72,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
     void SetGhost(Vector3 spawnOffset)
     {
-        Debug.Log("0");
         if (ghostObject == null && selectedObject != null)
         {
             ghostObject = Instantiate(selectedObject, spawnOffset, Quaternion.Euler(desiredRotation));

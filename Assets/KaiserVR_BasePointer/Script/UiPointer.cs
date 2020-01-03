@@ -16,7 +16,7 @@ using Valve.VR.InteractionSystem;
 /// Inputmodule must be in this scene
 /// 
 /// Camera with the following setting:
-/// Clear flags = don't cleat
+/// Clear flags = don't clear
 /// culling mask = nothing
 /// FOV = 0
 /// clippingmask near = 0.01
@@ -29,7 +29,6 @@ using Valve.VR.InteractionSystem;
 public class UiPointer : MonoBehaviour
 {
     [Header("laser properties")]
-    public float range = 10;
     public float UiOffset;
     public RaycastHit hit { get; private set; }
 

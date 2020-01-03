@@ -54,13 +54,23 @@ public class VR_GridPointer : MonoBehaviour
 
             if(element != null)
             {
-                if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
+                float timeHold = 0;
+                if (PlaceButton.GetState(SteamVR_Input_Sources.RightHand))
                 {
+
+
+                    timeHold += Time.deltaTime;
+
+                    
                     PlaceObject(selectedPrefab, spawnTransform);
 
                 }
                 else
                 {
+                    if(timeHold != 0)
+                    {
+                        Debug.Log(timeHold);
+                    }
                     SetGhost(element ,selectedPrefab);
                 }
             }
@@ -121,11 +131,11 @@ public class VR_GridPointer : MonoBehaviour
 
     void SetGhostShaders(Material[] mats)
     {
-        //for (int i = 0; i < mats.Length; i++)
-        //{
-        //    StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
-        //    //mats[i].shader = ghostShader;
-        //}
+        for (int i = 0; i < mats.Length; i++)
+        {
+            mats[i].shader = Shader.Find("Legacy Shaders/Transparent/Diffuse");
+            mats[i].color = new Color(mats[i].color.r, mats[i].color.g, mats[i].color.b, 0.5f);
+        }
     }
 
     void PlaceObject(GameObject placeable, Transform elementTransform)

@@ -39,7 +39,6 @@ public class GridElement : Grid
         for (int i = 0; i < colliders.Length; i++)
         {
             colliders[i].enabled = b;
-
         }
     }
 }

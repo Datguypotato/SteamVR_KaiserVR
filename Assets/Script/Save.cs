@@ -26,4 +26,9 @@ public class Save
     public GridTypes[] gridtype;
     public int[] objectIndex;
     public int[] childTransformIndex;
+
+    /// <summary>
+    /// thumbnail
+    /// </summary>
+    public string pathThumbnail;
 }

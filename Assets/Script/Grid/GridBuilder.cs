@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using Valve.VR;
 using UnityEngine.UI;
@@ -31,8 +30,8 @@ public class GridBuilder : MonoBehaviour
     public bool disableOnTeleport;
     public SteamVR_Action_Boolean teleportButton;
     
-    public int lastTabIndex;
-    public int activeMenu;
+    private int lastTabIndex;
+    private int activeMenu;
     private bool[] isActive;
 
     [HideInInspector]
@@ -115,6 +114,11 @@ public class GridBuilder : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SaveBuild();
+        }
     }
 
     private void Panel_OntabSwitch(int index)
@@ -174,6 +178,7 @@ public class GridBuilder : MonoBehaviour
         }
     }
 
+    //y and z is switched because this used to be a only one floor
     void CreateGrid(int xSize, int ySize, int zSize,float range)
     {
         float offset = range / 2;
@@ -187,7 +192,7 @@ public class GridBuilder : MonoBehaviour
                 {
                     float xRanged = x * range;
                     float yRanged = y * range;
-                    float zRanged = z * range * 3;
+                    float zRanged = z * 3;
 
                     Vector3 xOffset = new Vector3(xRanged - offset, 0, yRanged);
                     Vector3 yOffset = new Vector3(xRanged, 0, yRanged - offset);
@@ -248,17 +253,24 @@ public class GridBuilder : MonoBehaviour
         GridContainerWindow settingWindow = FindObjectOfType<GridContainerWindow>();
         settingWindow.gameObject.SetActive(false);
 
-        // serialize
-        Save save = CreateSaveGameObject();
-
-        // creating file
-        Debug.Log(Application.dataPath + "/Saves" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + ".Kaiser");
-        BinaryFormatter bf = new BinaryFormatter();
-        if(!Directory.Exists(Application.dataPath + "/Saves"))
+        // creating directory if needed
+        if (!Directory.Exists(Application.dataPath + "/Saves"))
         {
             Directory.CreateDirectory(Application.dataPath + "/Saves");
         }
 
+        Debug.Log("I got here");
+        if (!Directory.Exists(Application.dataPath + "/Resources/Thumbnail"))
+        {
+            Debug.Log("Creating directory");
+            Directory.CreateDirectory(Application.dataPath + "/Resources/Thumbnail");
+        }
+
+        // serialize
+        Save save = CreateSaveGameObject();
+
+        // creating file
+        BinaryFormatter bf = new BinaryFormatter();
 
         FileStream file = File.Create(Application.dataPath + "/Saves/" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + ".Kaiser");
         bf.Serialize(file, save);
@@ -281,7 +293,6 @@ public class GridBuilder : MonoBehaviour
         {
             
             // Getting save
-
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(filePath, FileMode.Open);
             Save save = (Save)bf.Deserialize(file);
@@ -295,11 +306,9 @@ public class GridBuilder : MonoBehaviour
             rangeSlider.value = save.gridRange;
 
             // setting grid acording to the settings
-
             UpdateGrid();
 
             //restting objects
-
             for (int i = 0; i < transform.childCount; i++)
             {
                 if (transform.GetChild(i).GetComponent<GridObject>() != null)
@@ -307,7 +316,6 @@ public class GridBuilder : MonoBehaviour
             }
 
             // getting available objects
-
             GameObject[] columColl = new GameObject[gridObjectSpawners[0].spawnableprefabs.Length];
             GameObject[] wallColl = new GameObject[gridObjectSpawners[1].spawnableprefabs.Length];
             GameObject[] floorColl = new GameObject[gridObjectSpawners[2].spawnableprefabs.Length];
@@ -329,14 +337,12 @@ public class GridBuilder : MonoBehaviour
             }
 
             // getting all transfor of the pointHolders
-            //
             columHolder = GetChildren(pointsholder[0]);
             floorHolder = GetChildren(pointsholder[1]);
             wallHolder = GetChildren(pointsholder[2]);
 
 
             // creating objects from save
-
             for (int i = 0; i < save.allposition.Length; i++)
             {
                 //decide what Object need to spawn
@@ -357,8 +363,8 @@ public class GridBuilder : MonoBehaviour
                         break;
 
                 }
-
             }
+
             Debug.Log("Save loaded");
         }
         else
@@ -419,6 +425,10 @@ public class GridBuilder : MonoBehaviour
 
     private Save CreateSaveGameObject()
     {
+        // create screenshot for thumbnail
+        string screenshotPath = Application.dataPath + "/Resources/Thumbnail/" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + "_Thumbnail.png";
+        ScreenCapture.CaptureScreenshot(screenshotPath);
+
         // creating variables
         Save save = new Save();
 
@@ -444,6 +454,7 @@ public class GridBuilder : MonoBehaviour
         SerializableVector3[] placeablePos = new SerializableVector3[placeableTransform.Count];
         SerializableQuaternion[] placeableRot = new SerializableQuaternion[placeableTransform.Count];
 
+
         // splitting data
         for (int i = 0; i < placeableTransform.Count; i++)
         {
@@ -457,6 +468,7 @@ public class GridBuilder : MonoBehaviour
         save.gridtype = placeableType.ToArray();
         save.objectIndex = saveObjectIndex.ToArray();
         save.childTransformIndex = saveTransformIndex.ToArray();
+        
 
         // assigning grid info
         save.xGrid = (int)xSlider.value;
@@ -464,6 +476,8 @@ public class GridBuilder : MonoBehaviour
         save.zGrid = int.Parse(zText.text);
 
         save.gridRange = rangeSlider.value;
+
+        save.pathThumbnail = screenshotPath;
 
         return save;
     }

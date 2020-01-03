@@ -90,7 +90,10 @@ public class GridContainerWindow : ViewportContent
         backButton.onClick.RemoveAllListeners();
 
         //Debug.Log(currentPage);
-        pages[currentPage].GetComponent<ViewportContent>().CloseWindow();
+        if (pages[currentPage].GetComponent<ViewportContent>() != null)
+        {
+            pages[currentPage].GetComponent<ViewportContent>().CloseWindow();
+        }
 
         //this is for VR_SwapHandModel
         Close?.Invoke(0);

@@ -29,6 +29,8 @@ public class Save
 
     /// <summary>
     /// thumbnail
+    /// At the moment not used
+    /// The thumbnail get loaded from resources/thumbnail
     /// </summary>
     public string pathThumbnail;
 }

@@ -32,8 +32,8 @@ public class VR_PointerEventEmitter : MonoBehaviour
             pointerEvent = pointer.highlightedObject.GetComponent<PointerEvent>();
 
 
-            //Invoke alls the event function here
-            //Heck PointerEventSystem and PointerEvent for more information
+            // Invoke alls the event function here
+            // Heck PointerEventSystem and PointerEvent for more information
             pointerEvent.onHoverEvent.Invoke(pointer);
 
             Animator anim = pointer.highlightedObject.GetComponent<Animator>();
@@ -41,10 +41,10 @@ public class VR_PointerEventEmitter : MonoBehaviour
             {
                 Transform highlightedTransform = pointer.highlightedObject.transform;
 
-
                 //setting up highlight object
-                _highlightedObject = Instantiate(pointer.highlightedObject, highlightedTransform.position, highlightedTransform.rotation, pointer.highlightedObject.transform);
+                _highlightedObject = Instantiate(pointer.highlightedObject, highlightedTransform.position, highlightedTransform.rotation);
                 Destroy(_highlightedObject.GetComponent<Animator>());
+                _highlightedObject.transform.parent = highlightedTransform;
                 _highlightedObject.layer = 2; //make it ignore uiipointer
                 _highlightedObject.GetComponent<MeshRenderer>().material = HoverMat;
             }
@@ -52,13 +52,12 @@ public class VR_PointerEventEmitter : MonoBehaviour
             if (activateAnimationButton.GetStateDown(hand))
             {
                 pointerEvent.OnClickEvent.Invoke(pointer);
-
-                //pointer.highlightedObject.GetComponent<Animator>().Play(0);
                 Destroy(_highlightedObject);
             }
         }
         else
         {
+            // resetting values
             if(pointerEvent != null)
             {
                 pointerEvent.OnExitEvent.Invoke(pointer);

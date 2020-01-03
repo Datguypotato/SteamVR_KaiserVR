@@ -46,6 +46,8 @@ public class GridBuilder : MonoBehaviour
     private List<Transform> wallHolder;
     private List<Transform> floorHolder;
 
+    public AudioSource audioSource;
+
     private void Awake()
     {
         panelMover = FindObjectOfType<VRPanelMover>();
@@ -427,7 +429,7 @@ public class GridBuilder : MonoBehaviour
     {
         // create screenshot for thumbnail
         string screenshotPath = Application.dataPath + "/Resources/Thumbnail/" + DateTime.Now.ToString("MM/dd/yyyy HHmm") + "_Thumbnail.png";
-        ScreenCapture.CaptureScreenshot(screenshotPath);
+        StartCoroutine(TakeScreenShot(screenshotPath));
 
         // creating variables
         Save save = new Save();
@@ -481,6 +483,18 @@ public class GridBuilder : MonoBehaviour
 
         return save;
     }
+
+    IEnumerator TakeScreenShot(string path)
+    {
+        VRPanelMover panelMover = FindObjectOfType<VRPanelMover>();
+        panelMover.EnableCanvas(false);
+        audioSource.PlayOneShot(audioSource.clip);
+        yield return new WaitForSeconds(1);
+        ScreenCapture.CaptureScreenshot(path, ScreenCapture.StereoScreenCaptureMode.RightEye);
+        yield return new WaitForEndOfFrame();
+        panelMover.EnableCanvas(true);
+    }
+
     #endregion
 }
 

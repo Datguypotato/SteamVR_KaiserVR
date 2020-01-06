@@ -44,12 +44,13 @@ public class UiPointer : MonoBehaviour
 
     PointerEventData data;
     
-    public GameObject highlightedObject;
+    public GameObject highlightedObject { get; private set; }
 
     //get changed in VR_FixedJointGrab
     public bool isgrabbing;
 
     Vector3 startScale;
+    public Transform fingerOffset;
 
     private void Awake()
     {
@@ -101,7 +102,7 @@ public class UiPointer : MonoBehaviour
         dot.transform.position = endPosition;
 
         // Set linerenderer
-        lineRenderer.SetPosition(0, transform.parent.transform.position);
+        lineRenderer.SetPosition(0, fingerOffset.position);
         lineRenderer.SetPosition(1, endPosition);
     }
 

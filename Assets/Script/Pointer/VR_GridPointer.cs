@@ -143,7 +143,8 @@ public class VR_GridPointer : MonoBehaviour
             Instantiate(dustParticle, elementTransform.position, Quaternion.identity);
 
             // play sound
-            spawnedObject.GetComponent<AudioSource>().Play();
+            if(spawnedObject.GetComponent<AudioSource>() != null)
+                spawnedObject.GetComponent<AudioSource>().Play();
 
             // special offset or default pos
             if (placeable.GetComponent<GridObject>().myType == GridTypes.Colum)

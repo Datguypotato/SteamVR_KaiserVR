@@ -9,9 +9,8 @@ using UnityEngine;
 /// </summary>
 
 public class VRBaseObjectsSpawner : GridButtonBehaviour
-{ 
-    [Tooltip("Debuggin purposses")]
-    public GameObject[] spawnableprefabs;
+{
+    public GameObject[] spawnableprefabs; //{ get; private set; }
     public ObjectData[] spawnableObjects;
 
     public bool showName;
@@ -34,10 +33,11 @@ public class VRBaseObjectsSpawner : GridButtonBehaviour
     {
         this.controller = controller;
 
-        spawnableObjects = new ObjectData[spawnableprefabs.Length];
-        for (int i = 0; i < spawnableprefabs.Length; i++)
+        spawnableprefabs = new GameObject[spawnableObjects.Length];
+
+        for (int i = 0; i < spawnableObjects.Length; i++)
         {
-            spawnableObjects[i] = new ObjectData(spawnableprefabs[i], showName);
+            spawnableprefabs[i] = spawnableObjects[i].spawnObject;
         }
 
         NumberOfObjects = spawnableObjects.Length;

@@ -41,6 +41,7 @@ public class UiPointer : MonoBehaviour
     private VR_Inputmodule inputModule = null;
 
     float targetLength;
+    readonly float targetOffset = 0.1f;
 
     PointerEventData data;
     
@@ -78,7 +79,7 @@ public class UiPointer : MonoBehaviour
     {
         // Use default or distance
         PointerEventData data = inputModule.Data;
-        hit = CreateRaycast();
+        hit = CreateRaycast(targetLength + targetOffset);
 
         // filling variables
         highlightedObject = hit.collider != null ? highlightedObject = hit.collider.gameObject : highlightedObject = null;
@@ -120,11 +121,11 @@ public class UiPointer : MonoBehaviour
         }
     }
 
-    private RaycastHit CreateRaycast()
+    private RaycastHit CreateRaycast(float range)
     {
         RaycastHit hit;
-        Ray ray = new Ray(transform.position, transform.forward);
-        Physics.Raycast(ray, out hit, defaultLength);
+        Ray ray = new Ray(fingerOffset.position, transform.forward);
+        Physics.Raycast(ray, out hit, range);
 
         return hit;
     }

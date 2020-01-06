@@ -115,26 +115,4 @@ public class GridSpawnWindow : ViewportContent
             }
         }
     }
-
-    //no longer needed 
-    //public void ResetButtonGrid()
-    //{
-    //    // destroy old buttons and pages
-
-    //    for (int i = 0; i < spawnedPages.Count; i++)
-    //    {
-    //        Destroy(spawnedPages[i]);
-    //    }
-
-    //    for (int i = 0; i < Buttons.Count; i++)
-    //    {
-    //        Destroy(Buttons[i]);
-    //    }
-
-    //    // clear list
-
-    //    spawnedPages.Clear();
-    //    Buttons.Clear();
-
-    //}
 }

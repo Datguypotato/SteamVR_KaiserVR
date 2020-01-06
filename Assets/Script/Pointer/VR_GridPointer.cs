@@ -60,6 +60,7 @@ public class VR_GridPointer : MonoBehaviour
                 if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
                 {
                     PlaceObject(selectedPrefab, spawnTransform);
+                    Destroy(tempObject);
                 }
                 else
                 {
@@ -98,7 +99,7 @@ public class VR_GridPointer : MonoBehaviour
             // check for special occasion 
             if (tempObject == null)
             {
-                tempObject = Instantiate(GhostObject, gridManager);
+                tempObject = Instantiate(GhostObject, new Vector3(1000, 1000, 1000), Quaternion.Euler(0,0,0), gridManager);
                 tempObject.layer = 2;
 
                 SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);

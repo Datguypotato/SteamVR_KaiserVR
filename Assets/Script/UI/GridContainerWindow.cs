@@ -27,12 +27,6 @@ public class GridContainerWindow : ViewportContent
 
     private ButtonUIController[] tabButtons;
 
-    VR_SwapHandModel swapHandModel;
-    [Header("Hand model swap")]
-    public GameObject leftHandPrefab;
-    public GameObject rightHandPrefab;
-
-    //doesn't work :(
     public delegate void OnWindow(int i);
     public event OnWindow Open;
     public event OnWindow Close;
@@ -41,7 +35,6 @@ public class GridContainerWindow : ViewportContent
 
     public override void SetupContent(UIpanel controller, GameObject viewPort)
     {
-        swapHandModel = FindObjectOfType<VR_SwapHandModel>();
 
         parentCanvas = GetComponentInParent<Canvas>();
 
@@ -70,14 +63,6 @@ public class GridContainerWindow : ViewportContent
 
     public override void OpenWindow()
     {
-        if(parentCanvas.enabled)
-        {
-            swapHandModel.SetRenderModel(leftHandPrefab, rightHandPrefab);
-
-            //Debug.Log("I am a stupid script and i am being stupid");
-        }
-
-
         SwitchToPage(currentPage);
     }
 

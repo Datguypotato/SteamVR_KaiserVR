@@ -7,6 +7,7 @@ using UnityEngine;
 
 
 /// <summary>
+/// deprecated
 /// Manager of swapping handmodel for steamVR
 /// </summary>
 
@@ -22,14 +23,7 @@ public class VR_SwapHandModel : MonoBehaviour
     public VRPanelMover panelMover;
     public SkeletonUIOptions SkeletonUIOptions;
 
-    private void Awake()
-    {
-        //panelMover = FindObjectOfType<VRPanelMover>();
-        //SkeletonUIOptions = FindObjectOfType<SkeletonUIOptions>();
 
-        recentLeftModel = GetComponentInChildren<GridContainerWindow>().leftHandPrefab;
-        recentRightModel = GetComponentInChildren<GridContainerWindow>().rightHandPrefab;
-    }
 
     private void OnEnable()
     {

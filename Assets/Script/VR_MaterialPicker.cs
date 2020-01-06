@@ -56,11 +56,6 @@ public class VR_MaterialPicker : MonoBehaviour
         AssignMaterials();
     }
 
-    private void Update()
-    {
-        
-    }
-
     void GetAllObjects()
     {
 

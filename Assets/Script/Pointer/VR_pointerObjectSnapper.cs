@@ -4,6 +4,9 @@ using Valve.VR;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
+/// <summary>
+/// this class handles Spawning object on grid ground
+/// </summary>
 public class VR_pointerObjectSnapper : MonoBehaviour
 {
     UiPointer pointer;
@@ -18,11 +21,11 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
     GameObject ghostObject;
 
-    public List<Transform> childList;
+    List<Transform> childList;
     Vector3 desiredRotation;
 
     bool changeSnapDir;
-    private string objectTag = "GridObject";
+    private readonly string objectTag = "GridObject";
 
     private void Awake()
     {
@@ -42,7 +45,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
         else if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<GridObjectPlaceAble>() != null)
         {
             Debug.Log("0");
-            //if(pointer.highlightedObject.GetComponent<GridObject>().myType == GridTypes.objectsnap)
                 SideSnap();
 
         }
@@ -66,7 +68,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
                 if (pointer.highlightedObject.GetComponent<GridObject>() != null)
                     return true;
 
-
         return false;
     }
 
@@ -82,7 +83,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
             for (int i = 0; i < childList.Count; i++)
             {
                 childList[i].gameObject.layer = 2;
-                //SetGhostShaders(childList[i].GetComponent<MeshRenderer>().materials);
             }
         }
         else if (ghostObject != null)
@@ -96,7 +96,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
     {
         for (int i = 0; i < mats.Length; i++)
         {
-            //StandardShaderUtils.ChangeRenderMode(mats[i], StandardShaderUtils.BlendMode.Transparent);
             mats[i] = ghostMaterial;
         }
     }
@@ -108,16 +107,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
 
         snapPoint = new Vector3(offset * normalHit.x, 0, offset * normalHit.z) + pointer.hit.transform.position;
         desiredRotation = pointer.hit.transform.rotation.eulerAngles;
-
-        //not needed yet
-        //if (changeSnapDir && normalHit.x != 0)
-        //{
-        //    snapPoint = new Vector3(offset * normalHit.x, 0, 0) + pointer.hit.transform.position;
-        //}
-        //else if (normalHit.z != 0)
-        //{
-        //    snapPoint = new Vector3(0, 0, offset * normalHit.z) + pointer.hit.transform.position;
-        //}
 
         if (snapPoint != pointer.hit.transform.position)
         {
@@ -135,7 +124,6 @@ public class VR_pointerObjectSnapper : MonoBehaviour
             if (hitTransform != null)
             {
                 spawnObject = Instantiate(selectedObject, pos, Quaternion.Euler(desiredRotation));
-                //spawnObject.transform.parent = parent;
             }
             else
             {
@@ -173,9 +161,3 @@ public class VR_pointerObjectSnapper : MonoBehaviour
         }
     }
 }
-
-
-
-//todo this is so bad i need to rework this
-//like some kind of inherintance for this and GridPointer
-//if this still exist this mean i didn't do anything about it and you have all the right to be mad at me

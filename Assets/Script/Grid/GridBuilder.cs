@@ -46,6 +46,8 @@ public class GridBuilder : MonoBehaviour
     private List<Transform> wallHolder;
     private List<Transform> floorHolder;
 
+    [Space(5)]
+
     public AudioSource audioSource;
 
     private void Awake()
@@ -409,8 +411,8 @@ public class GridBuilder : MonoBehaviour
         gridobject.childIndex = childInt;
     }
 
-    // I am not sure why yet but the first half of the list is miss transform
-    // My fix is simply remvoe the first half 
+    // I am not sure why yet but the first half of the list is missing transform
+    // My fix is simply remove the first half 
     // I think it has the do with the fact that I destroy all children
     List<Transform> GetChildren(Transform t)
     {

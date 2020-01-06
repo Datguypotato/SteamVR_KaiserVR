@@ -10,6 +10,7 @@ using UnityEngine;
 
 public class VRBaseObjectsSpawner : GridButtonBehaviour
 { 
+    [Tooltip("Debuggin purposses")]
     public GameObject[] spawnableprefabs;
     public ObjectData[] spawnableObjects;
 

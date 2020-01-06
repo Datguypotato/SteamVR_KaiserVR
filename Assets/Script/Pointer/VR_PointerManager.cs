@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(VR_pointerObjectSnapper))]
+[RequireComponent(typeof(VR_GridPointer))]
 public class VR_PointerManager : MonoBehaviour
 {
     UIpanel panel;

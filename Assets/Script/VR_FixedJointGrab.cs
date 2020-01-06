@@ -4,6 +4,13 @@ using Valve.VR;
 using Valve.VR.InteractionSystem;
 using UnityEngine;
 
+/// <summary>
+/// This class handle grabbing from the uiPointer using rigidbodys and fixed joints
+/// 
+/// <Requirement>
+/// UiPointer
+/// </Requirement>
+/// </summary>
 public class VR_FixedJointGrab : MonoBehaviour
 {
     /// <summary>
@@ -19,40 +26,22 @@ public class VR_FixedJointGrab : MonoBehaviour
     public GameObject CurrentGrabbedObject{ get; private set; }
 
     UiPointer pointer;
-    Hand hand;
-    //Rigidbody grabbedRb;
     GameObject dot;
     LineRenderer lineRenderer;
-
-    public GameObject particle;
-
-    bool deleteMode = false;
 
     private void Awake()
     {
         pointer = GetComponent<UiPointer>();
         dot = transform.GetChild(0).gameObject;
-        hand = GetComponentInParent<Hand>();
         lineRenderer = GetComponent<LineRenderer>();
     }
 
     private void Update()
     {
-        if (!deleteMode)
-        {
-            if (grabButton.GetStateDown(handGrab) && pointer.highlightedObject != null)
-                GrabFromAttachPoint(pointer.highlightedObject.transform.root.gameObject);
-            else if (grabButton.GetStateUp(handGrab))
-                UngrabFromAttachPoint();
-        }
-        else
-        {
-
-            if (grabButton.GetStateDown(handGrab))
-            {
-                DestroyObject(pointer.highlightedObject.transform.root.gameObject);
-            }
-        }
+        if (grabButton.GetStateDown(handGrab) && pointer.highlightedObject != null)
+            GrabFromAttachPoint(pointer.highlightedObject.transform.root.gameObject);
+        else if (grabButton.GetStateUp(handGrab))
+            UngrabFromAttachPoint();
     }
 
     /// <summary>
@@ -96,10 +85,9 @@ public class VR_FixedJointGrab : MonoBehaviour
 
         pointer.isgrabbing = false;
 
-
         if (CurrentGrabbedObject != null && CurrentGrabbedObject.GetComponent<Rigidbody>() != null)
         {
-            //set up the rotation
+            // set up the rotation
             Quaternion childRotation = CurrentGrabbedObject.transform.GetChild(0).rotation;
             Rigidbody grabbedRb = CurrentGrabbedObject.GetComponent<Rigidbody>();
             FixedJoint grabbedJoint = CurrentGrabbedObject.GetComponent<FixedJoint>();
@@ -107,42 +95,45 @@ public class VR_FixedJointGrab : MonoBehaviour
             CurrentGrabbedObject.transform.rotation = childRotation;
             CurrentGrabbedObject.transform.GetChild(0).localEulerAngles = Vector3.zero;
 
-            //empty variables
+            // empty variables
             Destroy(grabbedJoint);
             grabbedRb.useGravity = true;
             CurrentGrabbedObject = null;
         }
     }
 
-    void DestroyObject(GameObject deleteObject)
-    {
-        if(deleteObject != null && deleteObject.GetComponent<Interactable>())
-        {
-            Instantiate(particle, deleteObject.transform.position, deleteObject.transform.rotation);
-            Destroy(deleteObject);
-        }
-    }
+    ///////////////////////////
+    ///Deprecated
+    ///////////////////////////
+    //void DestroyObject(GameObject deleteObject)
+    //{
+    //    if(deleteObject != null && deleteObject.GetComponent<Interactable>())
+    //    {
+    //        Instantiate(particle, deleteObject.transform.position, deleteObject.transform.rotation);
+    //        Destroy(deleteObject);
+    //    }
+    //}
 
-    public void ToggleDeleteBeam()
-    {
-        deleteMode = !deleteMode;
-        CurrentGrabbedObject = null;
+    //public void ToggleDeleteBeam()
+    //{
+    //    deleteMode = !deleteMode;
+    //    CurrentGrabbedObject = null;
 
-        Debug.Log("Delete Mode: " + deleteMode);
+    //    Debug.Log("Delete Mode: " + deleteMode);
 
-        if (deleteMode)
-        {
-            lineRenderer.startColor = Color.red;
-            lineRenderer.endColor = Color.red;
+    //    if (deleteMode)
+    //    {
+    //        lineRenderer.startColor = Color.red;
+    //        lineRenderer.endColor = Color.red;
 
-            dot.GetComponent<Renderer>().material.color = Color.red;
-        }
-        else
-        {
-            lineRenderer.startColor = Color.green;
-            lineRenderer.endColor = Color.green;
+    //        dot.GetComponent<Renderer>().material.color = Color.red;
+    //    }
+    //    else
+    //    {
+    //        lineRenderer.startColor = Color.green;
+    //        lineRenderer.endColor = Color.green;
 
-            dot.GetComponent<Renderer>().material.color = Color.green;
-        }
-    }
+    //        dot.GetComponent<Renderer>().material.color = Color.green;
+    //    }
+    //}
 }

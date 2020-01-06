@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// deprecated
+/// </summary>
 public class GridDistanceChecker : MonoBehaviour
 {
     public Transform[] childrenTransform;

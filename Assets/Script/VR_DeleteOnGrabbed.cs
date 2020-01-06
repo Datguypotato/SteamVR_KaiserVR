@@ -15,7 +15,7 @@ public class VR_DeleteOnGrabbed : MonoBehaviour
     public SteamVR_Input_Sources hand = SteamVR_Input_Sources.RightHand;
 
     public GameObject particlePrefab;
-    public GameObject currentGo;
+    GameObject currentGo;
 
     VR_FixedJointGrab fixedJointGrab;
     UiPointer pointer;

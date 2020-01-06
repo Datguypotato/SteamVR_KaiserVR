@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using Valve.VR;
 using UnityEngine;
 
+/// <summary>
+/// this class handles moving and rotating objects that are grabbed
+/// <Requirements>
+/// VR_FixedJointGrab
+/// </Requirements>
+/// </summary>
 public class VR_RotateMoveObject : MonoBehaviour
 {
     public float rotateSpeed;
     public float moveSpeed;
 
     public SteamVR_Action_Vector2 joystick;
-    public Vector2 joystickPos;
-    
+
+    Vector2 joystickPos;
     VR_FixedJointGrab fixedJointGrab;
 
     private void Awake()

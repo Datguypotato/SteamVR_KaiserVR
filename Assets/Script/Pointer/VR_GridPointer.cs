@@ -4,6 +4,9 @@ using Valve.VR;
 using Valve.VR.InteractionSystem;
 using UnityEngine;
 
+/// <summary>
+/// this class is a pointer used for spawning objects on Grid
+/// </summary>
 public class VR_GridPointer : MonoBehaviour
 {
     UiPointer pointer;
@@ -25,7 +28,6 @@ public class VR_GridPointer : MonoBehaviour
     Vector3 spawnRotation;
 
     private bool needRotate;
-    readonly float axisLimit = 0.05f;
     int Index;
 
     //Vector3 offset = new Vector3(0, 1, 0);
@@ -33,6 +35,7 @@ public class VR_GridPointer : MonoBehaviour
     private void Awake()
     {
         pointer = GetComponent<UiPointer>();
+
         if(FindObjectOfType<GridBuilder>() != null)
         {
             gridManager = FindObjectOfType<GridBuilder>().transform;
@@ -54,23 +57,12 @@ public class VR_GridPointer : MonoBehaviour
 
             if(element != null)
             {
-                float timeHold = 0;
-                if (PlaceButton.GetState(SteamVR_Input_Sources.RightHand))
+                if (PlaceButton.GetStateDown(SteamVR_Input_Sources.RightHand))
                 {
-
-
-                    timeHold += Time.deltaTime;
-
-                    
                     PlaceObject(selectedPrefab, spawnTransform);
-
                 }
                 else
                 {
-                    if(timeHold != 0)
-                    {
-                        Debug.Log(timeHold);
-                    }
                     SetGhost(element ,selectedPrefab);
                 }
             }
@@ -103,14 +95,13 @@ public class VR_GridPointer : MonoBehaviour
     {
         if(gridObject != null && GhostObject != null)
         {
+            // check for special occasion 
             if (tempObject == null)
             {
                 tempObject = Instantiate(GhostObject, gridManager);
                 tempObject.layer = 2;
 
                 SetGhostShaders(tempObject.GetComponent<MeshRenderer>().materials);
-
-
             }
             else if(gridObject.myType == GridTypes.Colum)
             {
@@ -129,6 +120,10 @@ public class VR_GridPointer : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Deprecated
+    /// </summary>
+    /// <param name="mats"> material that gonna swap shader</param>
     void SetGhostShaders(Material[] mats)
     {
         for (int i = 0; i < mats.Length; i++)
@@ -144,20 +139,21 @@ public class VR_GridPointer : MonoBehaviour
         {
             GameObject spawnedObject = Instantiate(placeable, elementTransform.position, Quaternion.Euler(spawnRotation), gridManager);
 
-            //spawn the particle
+            // spawn the particle
             Instantiate(dustParticle, elementTransform.position, Quaternion.identity);
 
-            //play sound
+            // play sound
             spawnedObject.GetComponent<AudioSource>().Play();
 
-            //special offset or default pos
+            // special offset or default pos
             if (placeable.GetComponent<GridObject>().myType == GridTypes.Colum)
             {
                 spawnedObject.transform.rotation = Quaternion.identity;
             }
 
+
+            // configure spawned gridobject
             elementTransform.GetComponent<GridElement>().activeObject = spawnedObject;
-            //spawnedObject.transform.SetParent(t);
             spawnedObject.layer = 0;
             spawnedObject.tag = "GridObject";
             spawnedObject.GetComponent<GridObject>().objectIndex = Index;
@@ -166,6 +162,13 @@ public class VR_GridPointer : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Function used to update selection
+    /// this get called in VRGridObjectSpawner usually located in
+    /// UIcanvas/UIpanel/Main viewport/GridBuider/
+    /// </summary>
+    /// <param name="selectedGo">object to spawn</param>
+    /// <param name="arrayIndex">a int used for saving the build</param>
     public void UpdateSelection(GameObject selectedGo, int arrayIndex)
     {
         selectedPrefab = selectedGo;

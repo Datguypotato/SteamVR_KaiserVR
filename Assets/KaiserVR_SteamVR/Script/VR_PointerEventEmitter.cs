@@ -10,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class VR_PointerEventEmitter : MonoBehaviour
 {
-    public string tagChecker;
     public SteamVR_Action_Boolean activateAnimationButton;
     public SteamVR_Input_Sources hand;
     public Material HoverMat;
@@ -27,7 +26,7 @@ public class VR_PointerEventEmitter : MonoBehaviour
 
     private void Update()
     {
-        if (pointer.highlightedObject != null && pointer.highlightedObject.CompareTag(tagChecker))
+        if (pointer.highlightedObject != null && pointer.highlightedObject.GetComponent<PointerEvent>() != null)
         {
             pointerEvent = pointer.highlightedObject.GetComponent<PointerEvent>();
 
